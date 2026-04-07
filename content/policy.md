@@ -1,6 +1,6 @@
 Title: Privacy Policy & Disclaimer
-Date: 2023-01-01
-Update: 2026-02-18
+Date: 2020-01-25
+Update: 2026-03-26
 Type: page
 
 # Privacy Policy
