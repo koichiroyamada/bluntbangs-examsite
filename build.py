@@ -179,23 +179,20 @@ def build_posts():
             formatted_date = format_date_only(date)
             formatted_modified = format_date_only(modified)
 
-            display_date = f"投稿日: {formatted_date}" if formatted_date else ""
+            published_txt = f"投稿日: {formatted_date}" if formatted_date else ""
+            modified_txt = ""
 
-            modified_html = ""
             if formatted_modified and formatted_modified != formatted_date:
-                modified_html = f' <span class="update"><span class="update-label">更新日</span> {formatted_modified}</span>'
-
-            meta_html = ""
-            if display_date:
-                meta_html = f'<div class="date-container"><span class="date">{display_date}</span>{modified_html}</div>'
-
+                modified_txt = f"更新日: {formatted_modified}"
 
             content = render(
                 POST_TEMPLATE,
                 title=title,
-                meta_html=meta_html,
+                published_date=published_txt,
+                modified_date=modified_txt,
                 content=html,
             )
+
 
 
             desc = summary if summary else clean_html_to_text(html)[:140]
@@ -256,9 +253,11 @@ def build_pages():
             content = render(
                 POST_TEMPLATE,
                 title=title,
-                meta_html="",
+                published_date="",
+                modified_date="",
                 content=html,
             )
+
 
 
             desc = clean_html_to_text(html)[:140]
@@ -311,21 +310,17 @@ def build_index():
     for p in posts[1:]:
 
         formatted_date = format_date_only(p["date"])
-        formatted_modified = format_date_only(p["modified"])
-
-        update_html = ""
-        if formatted_modified and formatted_modified != formatted_date:
-            update_html = f' <span class="update"><span class="update-label">更新日</span> {formatted_modified}</span>'
-
         display_date = f"投稿日: {formatted_date}" if formatted_date else ""
 
         items.append(
             f'<li>'
             f'  <div class="date-container">'
-            f'    <span class="date">{display_date}</span>{update_html}'
+            f'    <span class="date">{display_date}</span>'
             f'  </div>'
             f'  <a href="{p["slug"]}.html">{p["title"]}</a>'
+            f'</li>'
         )
+
 
 
     index_content = render(

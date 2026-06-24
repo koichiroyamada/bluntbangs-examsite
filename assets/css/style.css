@@ -325,3 +325,14 @@ li {
     font-size: 0.75rem;
     font-weight: 600;
 }
+
+/* Hide empty metadata elements to keep layout clean */
+.article-header .date:empty,
+.article-header .update:empty {
+    display: none;
+}
+
+/* Hide container if both dates are empty */
+.article-header .date-container:has(.date:empty):has(.update:empty) {
+    display: none;
+}
