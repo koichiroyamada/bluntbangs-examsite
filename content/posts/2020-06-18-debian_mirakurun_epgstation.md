@@ -9,7 +9,7 @@ Summary: Debian GNU/Linux 10 Buster上でアースソフトのPT2を利用して
 [link-Mirakurun]: https://github.com/Chinachu/Mirakurun
 [link-EPGStation]: https://github.com/l3tnun/EPGStation
 
-# PCを使った録画環境
+## PCを使った録画環境
 
 PCでテレビ番組を録画する際に必要なものはチューナーです。
 
@@ -44,7 +44,7 @@ PCでテレビ番組を録画する際に必要なものはチューナーです
 
 Antecの電源は評判ほどよくはない。似たような不具合がぼちぼち見つかる。感染症のおかげで国内代理店のリンクスインターナショナルの対応も期待できずでした。残念無念です。
 
-# debian Buster インストール
+## debian Buster インストール
 
 ずっと使っているDebian GNU/Linuxのインストールです。boとかpotatoなんかを使っていた頃から比べたら何も考えることはありませんね。非常に簡単になりました。
 
@@ -123,7 +123,7 @@ Debianインストーラーの操作については割愛します。
 
 基本システムのみインストールすればいいので、デスクトップ環境やプリントサーバーなどのチェックを外してしまいます。スッキリ構成ならば5分くらいでインストールできてしまうことでしょう。やり直しだって気楽にできます。
 
-# Debianインストール後
+## Debianインストール後
 
 インストールできたらsudoとsshが利用できるようにします。
 
@@ -189,7 +189,7 @@ $ sudo apt-get update
 $ sudo apt-get upgrade
 ```
 
-# 基本的なコマンドと設定
+## 基本的なコマンドと設定
 
 シェルのエイリアスを設定します。定番どころを中心に設定して、場合によってはコメントアウトしておきます。
 
@@ -279,7 +279,7 @@ $ sudo systemctl restart smbd
 
 基本的なコマンドと言いながら、bashとvimとsambaだけだし。それしか必要ないってのが現状だし……。
 
-# 録画関連コマンドのインストール
+## 録画関連コマンドのインストール
 
 pt2を動かすドライバとカードリーダーの設定をさくっと済ませます。
 
@@ -360,7 +360,7 @@ $ checksignal --device /dev/pt1video3 20
 $ recpt1 --b25 --strip 20 10 test.ts
 ```
 
-# MirakurunとEPGStationのインストール
+## MirakurunとEPGStationのインストール
 
 はじめは全部まとめられたDockerで導入をしてみたのです。しかし、どういうプログラムなのかさっぱり理解せずに導入したので挙動がよくわからない。いろいろ不便。いまはDockerを利用せずに運用しています。ほかに何かを動かすわけでもないので見通しのよいようにします。
 
@@ -835,7 +835,7 @@ $ pm2 save
 
 ここまで進めればひと段落なはず。ブラウザでポート8888にアクセスすればRPGStationのUIが表示されます。
 
-# MirakurunとEPGStationの調整
+## MirakurunとEPGStationの調整
 
 基本的な調整は各種の設定ファイルに行っていきます。
 
@@ -936,7 +936,7 @@ esac
 
 連動して映画のx265エンコード自動化なんてのが便利でいいですね。ここからいろいろ追加していこうと思います。
 
-# Docker上にtssplitter環境
+## Docker上にtssplitter環境
 
 TSファイルを編集するにはTsSplitter.exeはやっぱり便利です。wine32をDocker上で動作させます。DockerとDocker Composeをインストールしておきます。
 
@@ -1012,7 +1012,7 @@ $ sudo docker build -t wine32 ~/tssplitter/.
 $ sudo docker run --rm --mount type=bind,src=$PWD,dst=$PWD wine32 /usr/local/bin/TsSplitter.exe -SD -1SEG -SEP -SEPA "$PWD/source.ts"
 ```
 
-# 運用に便利なシェルスクリプトを用意する
+## 運用に便利なシェルスクリプトを用意する
 
 適宜、スクリプトに連動させて動かします。wowowのような5.1chの映画なんかはTsSplitterを通すだけで切り抜きできますから重宝しています。
 

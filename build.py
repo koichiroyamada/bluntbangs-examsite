@@ -82,6 +82,16 @@ def clean_html_to_text(html_text):
     return text
 
 
+def format_date_only(date_str):
+    if not date_str:
+        return ""
+    m = re.match(r"^(\d{4}-\d{2}-\d{2})", date_str.strip())
+    if m:
+        return m.group(1)
+    return date_str.strip()
+
+
+
 def markdown_to_html(text):
     # Remove TOC placeholder if present
     cleaned_text = re.sub(r'^\[TOC\]\s*$', '', text, flags=re.MULTILINE | re.IGNORECASE)
@@ -166,11 +176,19 @@ def build_posts():
 
             html = markdown_to_html(body)
 
-            modified_html = ""
-            if modified and modified != date:
-                modified_html = f' <span class="update"><span class="update-label">UPDATE</span> {modified}</span>'
+            formatted_date = format_date_only(date)
+            formatted_modified = format_date_only(modified)
 
-            meta_html = f'<div class="date-container"><span class="date">{date}</span>{modified_html}</div>'
+            display_date = f"投稿日: {formatted_date}" if formatted_date else ""
+
+            modified_html = ""
+            if formatted_modified and formatted_modified != formatted_date:
+                modified_html = f' <span class="update"><span class="update-label">更新日</span> {formatted_modified}</span>'
+
+            meta_html = ""
+            if display_date:
+                meta_html = f'<div class="date-container"><span class="date">{display_date}</span>{modified_html}</div>'
+
 
             content = render(
                 POST_TEMPLATE,
@@ -292,18 +310,23 @@ def build_index():
     # Display remaining posts in the list (excluding the latest one)
     for p in posts[1:]:
 
+        formatted_date = format_date_only(p["date"])
+        formatted_modified = format_date_only(p["modified"])
+
         update_html = ""
-        if p["modified"] and p["modified"] != p["date"]:
-            update_html = f' <span class="update"><span class="update-label">UPDATE</span> {p["modified"]}</span>'
+        if formatted_modified and formatted_modified != formatted_date:
+            update_html = f' <span class="update"><span class="update-label">更新日</span> {formatted_modified}</span>'
+
+        display_date = f"投稿日: {formatted_date}" if formatted_date else ""
 
         items.append(
             f'<li>'
             f'  <div class="date-container">'
-            f'    <span class="date">{p["date"]}</span>{update_html}'
+            f'    <span class="date">{display_date}</span>{update_html}'
             f'  </div>'
             f'  <a href="{p["slug"]}.html">{p["title"]}</a>'
-            f'</li>'
         )
+
 
     index_content = render(
         INDEX_TEMPLATE,

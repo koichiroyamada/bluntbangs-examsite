@@ -36,11 +36,11 @@
 <article>
 <header class="article-header">
     <h1 class="article-title">Raspberry Piで作るはじめての赤外線リモコン</h1>
-    <div class="date-container"><span class="date">2020-07-29 13:53</span> <span class="update"><span class="update-label">UPDATE</span> 2020-09-25 12:29</span></div>
+    <div class="date-container"><span class="date">投稿日: 2020-07-29</span> <span class="update"><span class="update-label">更新日</span> 2020-09-25</span></div>
 </header>
 
 <div class="article-content">
-<h1>家庭のIT対策</h1>
+<h2>家庭のIT対策</h2>
 <p>自宅と実家の間を毎日行き来をしています。</p>
 <p>実家が勤務先なので、いわゆる通勤というやつです。</p>
 <p>自宅や実家に端末を持っていますが、拠点間でファイルのやりとりを行うにはVPNが便利ですね。自宅のサーバに勤務先からアクセス。便利です。もちろんクラウドで似たようなことが実現できますが、ファイルが大きくなってくれば保存容量を増やすために課金する必要が出てくることでしょう。運用コストや保守コストとのバランス次第ですが、自宅にサーバが既設である以上VPN一択でした。</p>
@@ -54,7 +54,7 @@
 <p>市販のIPカメラでもよかったのですが、どうも外部サーバに動画をストリーミングして見るという方式が信用できなかったのでネットワーク内で完結したものを目指しました。</p>
 <p>その方面の知見もないので、あまり悩まずにRaspberry Pi Wを購入してカメラを接続とド定番の方法をひとまず実行しました。</p>
 <p>OSはRaspidianのBuster。普段からDebianを使っていますので迷わず選びました。定石通りにイメージファイルをダウンロードしてから、SDカードをフォーマットし、Balena Etcherで書き込み。wpa_supplicant.confとsshフォルダをルートに配置して起動。あとは適宜raspi-configとsshまわりの設定を行います。これにMJPG-Streamerでインストールしておしまい。簡単です。そのほかのアプリケーションは試しましたが、これが一番いいかな。</p>
-<h1>赤外線コントロール</h1>
+<h2>赤外線コントロール</h2>
 <p>各種リモコンの解析と再送信を実施してみることにしました。</p>
 <p>リモコンにはRaspberry Pi ZeroのGPIOを利用します。Raspberry PiのGPIOに各種センサーやトランジスタ、LEDを接続して動作させます。</p>
 <p><img alt="電子部品" src="/images/development/raspi_ir-01.jpg" /></p>
@@ -111,13 +111,13 @@
 </table>
 <p>今回は秋月電子でパーツを購入しました。いつもなら秋葉原まで行って購入していましたが、通販で済ませました。</p>
 <p>作成手順は、初心者らしくブレッドボードで仮組みして動作を確認。確認できたらユニバーサル基板上に配置して半田付けします。</p>
-<h2>赤外線受信回路</h2>
+<h3>赤外線受信回路</h3>
 <p>必要な部品は赤外線リモコン受信モジュールOSRB38C9AAのみ。モジュールの3本の足とラズパイのGPIOをつなぐのみです。</p>
 <p>受光器に向かって左側からOUTPUT、GROUND、OUTPUTとなっていますので、OUTPUTをGPIO18、GROUNDをGND、VCCを3.3Vに接続です。</p>
 <p>OUTPUT ＞＞ GPIO18（物理番号12）
 GROUND ＞＞ GND（物理番号6）
 VCC ＞＞ 3.3V（物理番号1）</p>
-<h2>赤外線送信回路</h2>
+<h3>赤外線送信回路</h3>
 <p>ラズパイのGPIO17から信号を2N7000に、IRFU9024NPBFで赤外線LEDを操作します。</p>
 <p>先達の情報を見るのがはやいので詳しいところは割愛。</p>
 <ul>
@@ -125,7 +125,7 @@ VCC ＞＞ 3.3V（物理番号1）</p>
 <li><a href="https://vintagechips.wordpress.com/2013/10/05/赤外線ledドライブ回路の決定版/">赤外線LEDドライブ回路の決定版</a></li>
 </ul>
 <p>参考になりました。大変ありがとうございました。</p>
-<h1>リモコン信号の取得と送信</h1>
+<h2>リモコン信号の取得と送信</h2>
 <p>pigpioというありがたいライブラリがあるそうです。</p>
 <pre><code>$ sudo apt-get install pigpio python3-pigpio
 $ sudo systemctl enable pigpiod.service

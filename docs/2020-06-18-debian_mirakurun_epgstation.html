@@ -36,11 +36,11 @@
 <article>
 <header class="article-header">
     <h1 class="article-title">Mirakurun + EPGStation on Debian 10 (Buster)</h1>
-    <div class="date-container"><span class="date">2020-06-18 16:11</span> <span class="update"><span class="update-label">UPDATE</span> 2020-09-17 17:22</span></div>
+    <div class="date-container"><span class="date">投稿日: 2020-06-18</span> <span class="update"><span class="update-label">更新日</span> 2020-09-17</span></div>
 </header>
 
 <div class="article-content">
-<h1>PCを使った録画環境</h1>
+<h2>PCを使った録画環境</h2>
 <p>PCでテレビ番組を録画する際に必要なものはチューナーです。</p>
 <p>私はずっとアースソフトのPT2を使っています。PC自体はNECのサーバであるExpress5800/S70タイプRB。いわゆる鼻毛鯖を2010年から使っていました。組み立ててしばらくしたら東日本大震災が発生してましたね。かれこれ10年経過していますがあっという間です。そしてPT2はまだまだ現役です。</p>
 <p>2020年を前に、経年劣化しつつある各種部品の更新をかねて録画サーバーを更新しました。</p>
@@ -101,7 +101,7 @@
 <p>交換後の製品は異音の発生はないので運用開始。しかし、半年も経過すると原因不明な電源断が発生するようになりました。どうも内臓ハードディスクへのアクセスなどで負荷がかかるとストンと電源が落ちてしまうようです。状況を切り分けるのに数ヶ月かかりました……。日に日に動作状況が悪くなり、最後はSSDから煙。どうもSATAの電力供給に異常があるようでした。</p>
 <p>こりゃダメだということで7年保証をいかそうと販売元に連絡するも新型コロナウイルスによる感染症のため営業時間が不安定になり修理依頼後ひと月を経過しても進捗がなし。（二ヶ月後に新品を手配いただきました……。）市場に新品在庫もないのがわかっているので、保証があてにならないと判断。別の電源を手配することにします。</p>
 <p>Antecの電源は評判ほどよくはない。似たような不具合がぼちぼち見つかる。感染症のおかげで国内代理店のリンクスインターナショナルの対応も期待できずでした。残念無念です。</p>
-<h1>debian Buster インストール</h1>
+<h2>debian Buster インストール</h2>
 <p>ずっと使っているDebian GNU/Linuxのインストールです。boとかpotatoなんかを使っていた頃から比べたら何も考えることはありませんね。非常に簡単になりました。</p>
 <p>まず、Buster（Debian 10）のnetinstイメージを入手して、インストールUSBディスクを作成します。</p>
 <p>macOS環境で作業する手順は次のとおり。</p>
@@ -157,7 +157,7 @@ Password:
 <p>インストールUSBディスクが作成できたらLinuxマシンにUSBメモリを差し込んで起動する。お約束だけど内蔵しているSSDやHDDからブートしないためにも、BIOSの画面もたまには拝んで確認しておくのも良いことだと思います。</p>
 <p>Debianインストーラーの操作については割愛します。</p>
 <p>基本システムのみインストールすればいいので、デスクトップ環境やプリントサーバーなどのチェックを外してしまいます。スッキリ構成ならば5分くらいでインストールできてしまうことでしょう。やり直しだって気楽にできます。</p>
-<h1>Debianインストール後</h1>
+<h2>Debianインストール後</h2>
 <p>インストールできたらsudoとsshが利用できるようにします。</p>
 <pre><code>$ su -
 # apt-get update
@@ -196,7 +196,7 @@ deb-src http://security.debian.org/debian-security buster/updates main
 <pre><code>$ sudo apt-get update
 $ sudo apt-get upgrade
 </code></pre>
-<h1>基本的なコマンドと設定</h1>
+<h2>基本的なコマンドと設定</h2>
 <p>シェルのエイリアスを設定します。定番どころを中心に設定して、場合によってはコメントアウトしておきます。</p>
 <pre><code>$ vi ~/.bashrc
 </code></pre>
@@ -264,7 +264,7 @@ force directory mode = 0777
 $ sudo systemctl restart smbd
 </code></pre>
 <p>基本的なコマンドと言いながら、bashとvimとsambaだけだし。それしか必要ないってのが現状だし……。</p>
-<h1>録画関連コマンドのインストール</h1>
+<h2>録画関連コマンドのインストール</h2>
 <p>pt2を動かすドライバとカードリーダーの設定をさくっと済ませます。</p>
 <pre><code>$ sudo apt-get install \
     g++ \
@@ -321,7 +321,7 @@ $ checksignal --device /dev/pt1video2 20
 $ checksignal --device /dev/pt1video3 20
 $ recpt1 --b25 --strip 20 10 test.ts
 </code></pre>
-<h1>MirakurunとEPGStationのインストール</h1>
+<h2>MirakurunとEPGStationのインストール</h2>
 <p>はじめは全部まとめられたDockerで導入をしてみたのです。しかし、どういうプログラムなのかさっぱり理解せずに導入したので挙動がよくわからない。いろいろ不便。いまはDockerを利用せずに運用しています。ほかに何かを動かすわけでもないので見通しのよいようにします。</p>
 <p><a href="https://github.com/Chinachu/Mirakurun">Mirakurun</a>をひとまず導入します。</p>
 <p>Mirakurunはnode.js上で動作するので最新のnode.jsを取り入れつつインストールします。インストールスクリプトを信用しているのであまり小難しいことは考えずに実行。</p>
@@ -749,7 +749,7 @@ $ pm2 start dist/server/index.js --name &quot;epgstation&quot;
 $ pm2 save
 </code></pre>
 <p>ここまで進めればひと段落なはず。ブラウザでポート8888にアクセスすればRPGStationのUIが表示されます。</p>
-<h1>MirakurunとEPGStationの調整</h1>
+<h2>MirakurunとEPGStationの調整</h2>
 <p>基本的な調整は各種の設定ファイルに行っていきます。</p>
 <p>まずMirakurunについて調整。tuners.ymlやchannels.ymlは追加の調整なし。server.ymlを調整します。</p>
 <p>MirakurunとEPGStationの運用をはじめるとたびたび録画に失敗しました。どうやらEPGStationが録画を開始しようとすると空いているチューナーがない。つまりMirakurunがチューナーを占有してしまっている状態になっていると見受けられます。</p>
@@ -824,7 +824,7 @@ case $1 in
 esac
 </code></pre>
 <p>連動して映画のx265エンコード自動化なんてのが便利でいいですね。ここからいろいろ追加していこうと思います。</p>
-<h1>Docker上にtssplitter環境</h1>
+<h2>Docker上にtssplitter環境</h2>
 <p>TSファイルを編集するにはTsSplitter.exeはやっぱり便利です。wine32をDocker上で動作させます。DockerとDocker Composeをインストールしておきます。</p>
 <pre><code>$ sudo apt-get update
 $ sudo apt-get install \
@@ -886,7 +886,7 @@ ENTRYPOINT [ &quot;/usr/bin/wine&quot; ]
 <p>こんな記法で利用できます。</p>
 <pre><code>$ sudo docker run --rm --mount type=bind,src=$PWD,dst=$PWD wine32 /usr/local/bin/TsSplitter.exe -SD -1SEG -SEP -SEPA &quot;$PWD/source.ts&quot;
 </code></pre>
-<h1>運用に便利なシェルスクリプトを用意する</h1>
+<h2>運用に便利なシェルスクリプトを用意する</h2>
 <p>適宜、スクリプトに連動させて動かします。wowowのような5.1chの映画なんかはTsSplitterを通すだけで切り抜きできますから重宝しています。</p>
 <p>tsの編集に追加して、エンコードするコマンドを追加。</p>
 <pre><code>$ sudo apt-get install handbrake-cli
