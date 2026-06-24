@@ -1,124 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | bluntbangs</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico">
-    
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-405M9FNRRJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-405M9FNRRJ');
-    </script>
-    
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>bluntbangs</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- OGP / Social Graph -->
+<meta property="og:title" content="bluntbangs">
+<meta property="og:description" content="IoTという言葉があるんだーというレベルからはじめました。ネットの知見を生かして便利グッズの作成を目指します。アーカイブがなくなった時に備えて手順をまとめます。">
+<meta property="og:url" content="https://www.bluntbangs.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="bluntbangs">
+<meta name="twitter:card" content="summary">
 </head>
+
 <body>
-    <header class="site-header">
-        <div class="container">
-            <h1><a href="index.html">bluntbangs</a></h1>
-            <nav>
-                <ul>
-                    
-                    <li><a href="index.html">Home</a></li>
-                    
-                    <li><a href="archive.html">Archives</a></li>
-                    
-                </ul>
-            </nav>
-        </div>
-    </header>
-    
-    <main class="container">
-        
 
-        <h1>bluntbangs</h1>
-<p>A minimalist approach to web development. Simple, intentional, and under your complete control.</p>
-<h2>What This Is</h2>
-<p>This site demonstrates how small, well-crafted tools can outperform bloated frameworks. Built with Python, templates, and markdown. No databases. No complex build processes. Just clean code that you can understand and modify.</p>
-<h2>Latest Articles</h2>
-<!-- Recent articles will be listed by the template -->
+<header class="site-header">
+<div class="container">
+    <h1><a href="/">bluntbangs</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/policy.html">Policy</a></li>
+            <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+    </nav>
+</div>
+</header>
 
-<p><a href="articles.html">View All Articles</a></p>
+<main class="container">
+<div class="latest-post-area">
+<article>
+<header class="article-header">
+    <h1 class="article-title">Raspberry Piで作るはじめての赤外線リモコン</h1>
+    <div class="date-container"><span class="date">2020-07-29 13:53</span> <span class="update"><span class="update-label">UPDATE</span> 2020-09-25 12:29</span></div>
+</header>
 
-        
-        <nav class="article-navigation">
-            <div class="nav-previous">
-                
-                <a href="articles.html">&larr; Articles Archive</a>
-                
-            </div>
-            <div class="nav-next">
-                
-            </div>
-        </nav>
-        
+<div class="article-content">
+<h1>家庭のIT対策</h1>
+<p>自宅と実家の間を毎日行き来をしています。</p>
+<p>実家が勤務先なので、いわゆる通勤というやつです。</p>
+<p>自宅や実家に端末を持っていますが、拠点間でファイルのやりとりを行うにはVPNが便利ですね。自宅のサーバに勤務先からアクセス。便利です。もちろんクラウドで似たようなことが実現できますが、ファイルが大きくなってくれば保存容量を増やすために課金する必要が出てくることでしょう。運用コストや保守コストとのバランス次第ですが、自宅にサーバが既設である以上VPN一択でした。</p>
+<p>VPNといってもいろいろ手段がありますが、やっているのは拠点間のVPNです。東京と大阪の本社支店間でネットワークを組んでいるぞ！ってやつの家庭版です。</p>
+<p>機材は中古で調達したNECのルータ、IX2105です。もともとオークションで1台500円で入手したIX2015でVPNを張っていましたが、このほどIX2105に変更。やっとギガビット回線に追いつきました。家庭用ルータでも実現できなくはありませんが、やはり業務用ルータが手堅い。信頼できます。</p>
+<p>ルータにはコンフィグが必要です。このコンフィグはファームウェアのバージョンによって左右されてしまうので割愛しますが、双方の拠点にDDNSでFQDNを割り当てて接続しています。ルータのマニュアルやNECが提供する設定事例を参考にすれば大丈夫でしょう。ほぼそのままです。</p>
+<p>ちなみにNTT東日本のフレッツ網とAUひかりの間で構築しています。AUひかり側は二重ルータになっています。</p>
+<p>特徴としては、NECのルータなのでEthernet over IP機能を利用しています。自宅と店舗は同一LANとして接続しており、ネットワーク上のサーバにどの端末からでもアクセス、実家店舗内に設置したカメラの様子を自宅からも見られます。</p>
+<p>実家台所で食事をしながら店舗の様子を伺うためにカメラを用意しています。</p>
+<p>古いiPodに「からくりカメラ」というIPカメラのアプリを入れて運用していましたが、iPodのOSがさすがに古いのでいずれ使えなくなると思い見守りカメラを導入することにしました。</p>
+<p>市販のIPカメラでもよかったのですが、どうも外部サーバに動画をストリーミングして見るという方式が信用できなかったのでネットワーク内で完結したものを目指しました。</p>
+<p>その方面の知見もないので、あまり悩まずにRaspberry Pi Wを購入してカメラを接続とド定番の方法をひとまず実行しました。</p>
+<p>OSはRaspidianのBuster。普段からDebianを使っていますので迷わず選びました。定石通りにイメージファイルをダウンロードしてから、SDカードをフォーマットし、Balena Etcherで書き込み。wpa_supplicant.confとsshフォルダをルートに配置して起動。あとは適宜raspi-configとsshまわりの設定を行います。これにMJPG-Streamerでインストールしておしまい。簡単です。そのほかのアプリケーションは試しましたが、これが一番いいかな。</p>
+<h1>赤外線コントロール</h1>
+<p>各種リモコンの解析と再送信を実施してみることにしました。</p>
+<p>リモコンにはRaspberry Pi ZeroのGPIOを利用します。Raspberry PiのGPIOに各種センサーやトランジスタ、LEDを接続して動作させます。</p>
+<p><img alt="電子部品" src="/images/development/raspi_ir-01.jpg" /></p>
+<p>集めたパーツは次の通りです。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">品名</th>
+<th style="text-align: right;">価格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">赤外線リモコン受信モジュール OSRB38C9AA（2個入）</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">5mm赤外線LED 940mm OSI5LA5113A グレー（10個入）</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">MOSFET 2N7000</td>
+<td style="text-align: right;">20円</td>
+</tr>
+<tr>
+<td style="text-align: left;">PchパワーMOSFET（55V11A）IRFU9024NPBF</td>
+<td style="text-align: right;">70円</td>
+</tr>
+<tr>
+<td style="text-align: left;">カーボン抵抗（炭素皮膜抵抗）1/2W4.7kΩ（100本入）</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">カーボン抵抗（炭素皮膜抵抗）1W27Ω（100本入）</td>
+<td style="text-align: right;">200円</td>
+</tr>
+<tr>
+<td style="text-align: left;">ピンソケット（メス）2x20（40P）</td>
+<td style="text-align: right;">80円</td>
+</tr>
+<tr>
+<td style="text-align: left;">Raspberry Pi ZERO用ユニバーサル基板</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">ミニブレッドボード BB-601（スケルトン）</td>
+<td style="text-align: right;">170円</td>
+</tr>
+<tr>
+<td style="text-align: left;">手持ちのジャンパワイヤー若干</td>
+<td style="text-align: right;">0円</td>
+</tr>
+</tbody>
+</table>
+<p>今回は秋月電子でパーツを購入しました。いつもなら秋葉原まで行って購入していましたが、通販で済ませました。</p>
+<p>作成手順は、初心者らしくブレッドボードで仮組みして動作を確認。確認できたらユニバーサル基板上に配置して半田付けします。</p>
+<h2>赤外線受信回路</h2>
+<p>必要な部品は赤外線リモコン受信モジュールOSRB38C9AAのみ。モジュールの3本の足とラズパイのGPIOをつなぐのみです。</p>
+<p>受光器に向かって左側からOUTPUT、GROUND、OUTPUTとなっていますので、OUTPUTをGPIO18、GROUNDをGND、VCCを3.3Vに接続です。</p>
+<p>OUTPUT ＞＞ GPIO18（物理番号12）
+GROUND ＞＞ GND（物理番号6）
+VCC ＞＞ 3.3V（物理番号1）</p>
+<h2>赤外線送信回路</h2>
+<p>ラズパイのGPIO17から信号を2N7000に、IRFU9024NPBFで赤外線LEDを操作します。</p>
+<p>先達の情報を見るのがはやいので詳しいところは割愛。</p>
+<ul>
+<li><a href="https://qiita.com/takjg/items/e6b8af53421be54b62c9">格安スマートリモコンの作り方</a></li>
+<li><a href="https://vintagechips.wordpress.com/2013/10/05/赤外線ledドライブ回路の決定版/">赤外線LEDドライブ回路の決定版</a></li>
+</ul>
+<p>参考になりました。大変ありがとうございました。</p>
+<h1>リモコン信号の取得と送信</h1>
+<p>pigpioというありがたいライブラリがあるそうです。</p>
+<pre><code>$ sudo apt-get install pigpio python3-pigpio
+$ sudo systemctl enable pigpiod.service
+$ sudo systemctl start pigpiod
+</code></pre>
+<p>続いてGPIOを設定。起動時に設定されるようにcrontabに記述。</p>
+<pre><code>@reboot until echo 'm 17 w   w 17 0   m 18 r   pud 18 u' &gt; /dev/pigpio; do sleep 1s; done
+</code></pre>
+<p>送受信プログラムも用意されているとのことなので導入。</p>
+<pre><code>$ curl http://abyz.me.uk/rpi/pigpio/code/irrp_py.zip | zcat &gt; irrp.py
+</code></pre>
+<p>信号の取得は次のようなコマンドです。手近なテレビリモコンの電源ボタンでテスト。</p>
+<pre><code>$ python3 irrp.py -r -g18 -f codes tv:on --no-confirm --post 130
+Recording
+Press key for 'tv:on'
+Okay
+</code></pre>
+<p>送信も簡単。</p>
+<pre><code>$ python3 irrp.py -p -g17 -f codes tv:on
+</code></pre>
+<p>テレビのチャンネルの信号をさらに追加して、シェルスクリプトで電源オンからチャンネルをザッピングして電源オフなんて信号を送ってみたりしテストしてみましたが動作に問題はなし。とっても簡単でした。先達の知見あってのらくちんさ。</p>
+<p>確認が取れたらユニバーサル基板に半田付けです。レイアウトは結構考えてしまいます。なるべくスマートにしたいんですが、どうしたものか。Excelで図を作成したりして検討しました。</p>
+<p><img alt="ソケットを溶かした" src="/images/development/raspi_ir-02.jpg" /></p>
+<p>半田付けの作業に入るとやらかしてしまいました。ピンソケットを半田ごてで溶かしてしまう失態。もう老眼でよく見えていないという事実を突き付けられました。</p>
+<p><img alt="ラズパイ赤外線リモコン" src="/images/development/raspi_ir-03.jpg" /></p>
+<p>途方に暮れてみたものの、模型加工のつもりで、なんとか穴をピンバイスであけなおしてリカバリ。赤外線リモコンボードの完成までこぎつけました。</p>
+<p>あとはGoogle HomeやSiri、Alexaとの連携をすれば完成のはず。目指しているのは高齢者の見守りカメラとエアコンの適温管理。温度センサーも実装しようかな。もう少し続くと思います。</p>
+</div>
+</article>
 
-        
-        <section class="page-list">
-            <h2>Latest Updates</h2>
-            <ul class="archive-list">
-                
-                <li>
-                    <div class="date-container">
-                        <span class="date">Feb 17, 2026</span>
-                        <span class="update">Mar 26, 2026<span class="update-label">UPDATE</span></span>
-                    </div>
-                    <a href="articles.html">Articles Archive</a>
-                </li>
-                
-                <li>
-                    <div class="date-container">
-                        <span class="date">Jan 25, 2020</span>
-                        <span class="update">Mar 26, 2026<span class="update-label">UPDATE</span></span>
-                    </div>
-                    <a href="policy.html">Privacy Policy & Disclaimer</a>
-                </li>
-                
-                <li>
-                    <div class="date-container">
-                        <span class="date">Feb 18, 2026</span>
-                        
-                    </div>
-                    <a href="index.html">Home</a>
-                </li>
-                
-                <li>
-                    <div class="date-container">
-                        <span class="date">2020-07-29 13:53</span>
-                        
-                    </div>
-                    <a href="raspiir.html">Raspberry Piで作るはじめての赤外線リモコン</a>
-                </li>
-                
-                <li>
-                    <div class="date-container">
-                        <span class="date">2020-06-18 16:11</span>
-                        
-                    </div>
-                    <a href="debian_mirakurun_epgstation.html">Mirakurun + EPGStation on Debian 10 (Buster)</a>
-                </li>
-                
-            </ul>
-            <div class="more-link">
-                <a href="archive.html">View Archives &rarr;</a>
-            </div>
-        </section>
-        
-    </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <span>© 2026 bluntbangs</span>
-                <a href="policy.html" class="footer-link">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
+
+</div>
+
+<hr>
+
+<section class="archive-section">
+    <h2>Posts</h2>
+    <ul class="archive-list">
+        <li>  <div class="date-container">    <span class="date">2020-06-18 16:11</span> <span class="update"><span class="update-label">UPDATE</span> 2020-09-17 17:22</span>  </div>  <a href="2020-06-18-debian_mirakurun_epgstation.html">Mirakurun + EPGStation on Debian 10 (Buster)</a></li>
+    </ul>
+</section>
+
+
+</main>
+
+<footer class="site-footer">
+<div class="container footer-content">
+    <p>© bluntbangs</p>
+    <a href="/policy.html" class="footer-link">Privacy Policy</a>
+</div>
+</footer>
+
 </body>
 </html>
+
+

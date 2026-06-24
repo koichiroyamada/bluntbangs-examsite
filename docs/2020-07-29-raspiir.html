@@ -1,51 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raspberry Piで作るはじめての赤外線リモコン | bluntbangs</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico">
-    
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-405M9FNRRJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-405M9FNRRJ');
-    </script>
-    
-</head>
-<body>
-    <header class="site-header">
-        <div class="container">
-            <h1><a href="index.html">bluntbangs</a></h1>
-            <nav>
-                <ul>
-                    
-                    <li><a href="index.html">Home</a></li>
-                    
-                    <li><a href="archive.html">Archives</a></li>
-                    
-                </ul>
-            </nav>
-        </div>
-    </header>
-    
-    <main class="container">
-        
-        <header class="article-header">
-            <h1 class="article-title">Raspberry Piで作るはじめての赤外線リモコン</h1>
-            <div style="color: #86868b; font-family: 'SF Mono', monospace; font-size: 0.9rem;">
-                <span>2020-07-29 13:53</span>
-                
-            </div>
-        </header>
-        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <p>[TOC]</p>
+<title>Raspberry Piで作るはじめての赤外線リモコン</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- OGP / Social Graph -->
+<meta property="og:title" content="Raspberry Piで作るはじめての赤外線リモコン">
+<meta property="og:description" content="IoTという言葉があるんだーというレベルからはじめました。ネットの知見を生かして便利グッズの作成を目指します。アーカイブがなくなった時に備えて手順をまとめます。">
+<meta property="og:url" content="https://www.bluntbangs.com/2020-07-29-raspiir.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="bluntbangs">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body>
+
+<header class="site-header">
+<div class="container">
+    <h1><a href="/">bluntbangs</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/policy.html">Policy</a></li>
+            <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+    </nav>
+</div>
+</header>
+
+<main class="container">
+<article>
+<header class="article-header">
+    <h1 class="article-title">Raspberry Piで作るはじめての赤外線リモコン</h1>
+    <div class="date-container"><span class="date">2020-07-29 13:53</span> <span class="update"><span class="update-label">UPDATE</span> 2020-09-25 12:29</span></div>
+</header>
+
+<div class="article-content">
 <h1>家庭のIT対策</h1>
 <p>自宅と実家の間を毎日行き来をしています。</p>
 <p>実家が勤務先なので、いわゆる通勤というやつです。</p>
@@ -65,18 +59,56 @@
 <p>リモコンにはRaspberry Pi ZeroのGPIOを利用します。Raspberry PiのGPIOに各種センサーやトランジスタ、LEDを接続して動作させます。</p>
 <p><img alt="電子部品" src="/images/development/raspi_ir-01.jpg" /></p>
 <p>集めたパーツは次の通りです。</p>
-<p>|品名|価格|
-|:------|--:|
-|赤外線リモコン受信モジュール OSRB38C9AA（2個入）|100円|
-|5mm赤外線LED 940mm OSI5LA5113A グレー（10個入）|100円|
-|MOSFET 2N7000|20円|
-|PchパワーMOSFET（55V11A）IRFU9024NPBF|70円|
-|カーボン抵抗（炭素皮膜抵抗）1/2W4.7kΩ（100本入）|100円|
-|カーボン抵抗（炭素皮膜抵抗）1W27Ω（100本入）|200円|
-|ピンソケット（メス）2x20（40P）|80円|
-|Raspberry Pi ZERO用ユニバーサル基板|100円|
-|ミニブレッドボード BB-601（スケルトン）|170円|
-|手持ちのジャンパワイヤー若干|0円|</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">品名</th>
+<th style="text-align: right;">価格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">赤外線リモコン受信モジュール OSRB38C9AA（2個入）</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">5mm赤外線LED 940mm OSI5LA5113A グレー（10個入）</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">MOSFET 2N7000</td>
+<td style="text-align: right;">20円</td>
+</tr>
+<tr>
+<td style="text-align: left;">PchパワーMOSFET（55V11A）IRFU9024NPBF</td>
+<td style="text-align: right;">70円</td>
+</tr>
+<tr>
+<td style="text-align: left;">カーボン抵抗（炭素皮膜抵抗）1/2W4.7kΩ（100本入）</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">カーボン抵抗（炭素皮膜抵抗）1W27Ω（100本入）</td>
+<td style="text-align: right;">200円</td>
+</tr>
+<tr>
+<td style="text-align: left;">ピンソケット（メス）2x20（40P）</td>
+<td style="text-align: right;">80円</td>
+</tr>
+<tr>
+<td style="text-align: left;">Raspberry Pi ZERO用ユニバーサル基板</td>
+<td style="text-align: right;">100円</td>
+</tr>
+<tr>
+<td style="text-align: left;">ミニブレッドボード BB-601（スケルトン）</td>
+<td style="text-align: right;">170円</td>
+</tr>
+<tr>
+<td style="text-align: left;">手持ちのジャンパワイヤー若干</td>
+<td style="text-align: right;">0円</td>
+</tr>
+</tbody>
+</table>
 <p>今回は秋月電子でパーツを購入しました。いつもなら秋葉原まで行って購入していましたが、通販で済ませました。</p>
 <p>作成手順は、初心者らしくブレッドボードで仮組みして動作を確認。確認できたらユニバーサル基板上に配置して半田付けします。</p>
 <h2>赤外線受信回路</h2>
@@ -121,32 +153,21 @@ Okay
 <p><img alt="ラズパイ赤外線リモコン" src="/images/development/raspi_ir-03.jpg" /></p>
 <p>途方に暮れてみたものの、模型加工のつもりで、なんとか穴をピンバイスであけなおしてリカバリ。赤外線リモコンボードの完成までこぎつけました。</p>
 <p>あとはGoogle HomeやSiri、Alexaとの連携をすれば完成のはず。目指しているのは高齢者の見守りカメラとエアコンの適温管理。温度センサーも実装しようかな。もう少し続くと思います。</p>
+</div>
+</article>
 
-        
-        <nav class="article-navigation">
-            <div class="nav-previous">
-                
-                <a href="debian_mirakurun_epgstation.html">&larr; Mirakurun + EPGStation on Debian 10 (Buster)</a>
-                
-            </div>
-            <div class="nav-next">
-                
-                <a href="articles.html">Articles Archive &rarr;</a>
-                
-            </div>
-        </nav>
-        
 
-        
-    </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <span>© 2026 bluntbangs</span>
-                <a href="policy.html" class="footer-link">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
+</main>
+
+<footer class="site-footer">
+<div class="container footer-content">
+    <p>© bluntbangs</p>
+    <a href="/policy.html" class="footer-link">Privacy Policy</a>
+</div>
+</footer>
+
 </body>
 </html>
+
+

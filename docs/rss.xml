@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rss version="2.0">
+<channel>
+
+<title>bluntbangs</title>
+<link>https://www.bluntbangs.com</link>
+
+
+<item>
+<title>Raspberry Piで作るはじめての赤外線リモコン</title>
+<link>https://www.bluntbangs.com/2020-07-29-raspiir.html</link>
+<guid>https://www.bluntbangs.com/2020-07-29-raspiir.html</guid>
+<description>IoTという言葉があるんだーというレベルからはじめました。ネットの知見を生かして便利グッズの作成を目指します。アーカイブがなくなった時に備えて手順をまとめます。</description>
+</item>
+
+<item>
+<title>Mirakurun + EPGStation on Debian 10 (Buster)</title>
+<link>https://www.bluntbangs.com/2020-06-18-debian_mirakurun_epgstation.html</link>
+<guid>https://www.bluntbangs.com/2020-06-18-debian_mirakurun_epgstation.html</guid>
+<description>Debian GNU/Linux 10 Buster上でアースソフトのPT2を利用してテレビ番組録画環境を構築しました。MirakurunとEPGStationを使いこなせているかまでは不明です。</description>
+</item>
+
+
+</channel>
+</rss>

@@ -1,176 +1,431 @@
+import re
 import shutil
-import markdown
-from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
-import config
-from datetime import datetime
+import markdown
 
-def build():
-    # Load configuration
-    content_dir = Path(config.CONTENT_DIR)
-    output_dir = Path(config.OUTPUT_DIR)
-    template_dir = Path(config.TEMPLATE_DIR)
-    static_dir = Path(config.STATIC_DIR)
+SITE_NAME = "bluntbangs"
+SITE_URL = "https://www.bluntbangs.com"
 
-    # 1. Initialize output directory (clean build)
-    if output_dir.exists():
-        shutil.rmtree(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+CONTENT_DIR = Path("content")
+POSTS_DIR = CONTENT_DIR / "posts"
+PAGES_DIR = CONTENT_DIR / "pages"
 
-    # 2. Prepare templates
-    env = Environment(loader=FileSystemLoader(template_dir))
-    template = env.get_template('base.html')
+ASSETS_DIR = Path("assets")
+OUTPUT_DIR = Path("docs")
 
-    # 日付整形用関数（英語形式: "Mar 29, 2026"）
-    def fmt_iso(d):
-        if not d: return ""
-        try:
-            dt = datetime.strptime(d, '%Y-%m-%d')
-            return dt.strftime('%b %d, %Y')
-        except ValueError: return d
+TEMPLATES_DIR = Path("templates")
 
-    # 3. Scan Content directory and collect metadata
-    pages = []
-    for md_file in sorted(content_dir.glob('*.md')):
-        with open(md_file, 'r', encoding='utf-8') as f:
-            text = f.read()
 
-        # Convert Markdown (with metadata extraction)
-        md = markdown.Markdown(extensions=['meta', 'fenced_code'])
-        html_content = md.convert(text)
-        meta = md.Meta if hasattr(md, 'Meta') else {}
+# --------------------------------------------------
+# utility
+# --------------------------------------------------
 
-        # Skip draft posts
-        if meta.get('status', [''])[0].lower() == 'draft':
+def read_file(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def write_file(path, content):
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
+def parse_frontmatter(text):
+
+    meta = {}
+
+    m = re.match(
+        r"^---\s*\n(.*?)\n---\s*\n?(.*)$",
+        text,
+        re.DOTALL,
+    )
+
+    if not m:
+        return meta, text
+
+    header = m.group(1)
+    body = m.group(2)
+
+    for line in header.splitlines():
+
+        if ":" not in line:
             continue
 
-        # Warn if metadata is missing
-        if 'title' not in meta:
-            print(f"Warning: '{md_file.name}' is missing 'Title'. Using filename.")
-        if 'date' not in meta:
-            print(f"Warning: '{md_file.name}' is missing 'Date'.")
+        k, v = line.split(":", 1)
 
-        title = meta.get('title', [md_file.stem])[0]
-        output_filename = f"{md_file.stem}.html"
+        meta[k.strip().lower()] = v.strip()
 
-        pages.append({
-            'title': title,
-            'url': output_filename,
-            'content': html_content,
-            'meta': meta,
-            'date_iso': fmt_iso(meta.get('date', [''])[0]),
-            'update_iso': fmt_iso(meta.get('update', [''])[0]),
-        })
+    return meta, body
 
-    # 4. Sort pages by date (descending)
-    # Sort before static processing to ensure correct order for index.html
-    pages.sort(key=lambda x: x['meta'].get('date', [''])[0], reverse=True)
 
-    # Create sorted list for recent pages (by update date, or creation date if not updated)
-    recent_pages = sorted(pages, key=lambda x: x['update_iso'] or x['date_iso'], reverse=True)[:5]
+def extract_title(text, fallback):
 
-    # 5. Process static files
-    # Copy non-Markdown files as-is; Markdown files are converted to HTML
-    if static_dir.exists():
-        for file_path in static_dir.rglob('*'):
-            # Calculate output path
-            rel_path = file_path.relative_to(static_dir)
-            dest_path = output_dir / rel_path
+    m = re.search(
+        r"^#\s+(.+)$",
+        text,
+        re.MULTILINE
+    )
 
-            if file_path.is_dir():
-                dest_path.mkdir(parents=True, exist_ok=True)
-                continue
+    if m:
+        return m.group(1).strip()
 
-            if file_path.suffix == '.md':
-                continue  # Don't process .md files (migrated to content/)
-            else:
-                # Copy other files (images, CSS, etc.) as-is
-                shutil.copy2(file_path, dest_path)
+    return fallback
 
-    # 6. Generate each content page
-    count = 0
-    for i, page in enumerate(pages):
-        # Get adjacent pages (pages are sorted newest to oldest)
-        # newer_post has smaller index
-        newer_post = pages[i-1] if i > 0 else None
-        # older_post has larger index
-        older_post = pages[i+1] if i < len(pages) - 1 else None
 
-        # Prepare data for template
-        context = {
-            'site_name': config.SITE_NAME,
-            'title': page['title'],
-            'page_title': f"{page['title']} | {config.SITE_NAME}",
-            'content': page['content'],
-            'meta': page['meta'],
-            'copyright': config.COPYRIGHT,
-            'google_analytics_id': config.GOOGLE_ANALYTICS_ID,
-            'menu_items': config.MENU_ITEMS,
-            'all_pages': pages,
-            'recent_pages': recent_pages,
-            'newer_post': newer_post,
-            'older_post': older_post,
-            'date_iso': page['date_iso'],
-            'update_iso': page['update_iso'],
-            'current_url': page['url'],
-        }
+def clean_html_to_text(html_text):
+    # Remove HTML tags
+    text = re.sub(r'<[^>]+>', '', html_text)
+    # Normalize whitespaces
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
 
-        # Write HTML output
-        output_html = template.render(context)
-        with open(output_dir / page['url'], 'w', encoding='utf-8') as f:
-            f.write(output_html)
-        count += 1
 
-    # 7. Generate archive page
-    archive_list_html = '<ul class="archive-list">'
-    for page in pages:
-        date_html = f'<span class="date">{page["date_iso"]}</span>'
-        if page['update_iso']:
-            date_html += f'<span class="update">{page["update_iso"]}<span class="update-label">UPDATE</span></span>'
+def markdown_to_html(text):
+    # Remove TOC placeholder if present
+    cleaned_text = re.sub(r'^\[TOC\]\s*$', '', text, flags=re.MULTILINE | re.IGNORECASE)
 
-        archive_list_html += f'<li><div class="date-container">{date_html}</div><a href="{page["url"]}">{page["title"]}</a></li>'
-    archive_list_html += "</ul>"
+    md = markdown.Markdown(
+        extensions=[
+            "fenced_code",
+            "tables",
+        ]
+    )
 
-    archive_context = {
-        'site_name': config.SITE_NAME,
-        'page_title': f"Archives | {config.SITE_NAME}",
-        'content': f"<h2>Archives</h2>{archive_list_html}",
-        'meta': {},
-        'copyright': config.COPYRIGHT,
-        'google_analytics_id': config.GOOGLE_ANALYTICS_ID,
-        'menu_items': config.MENU_ITEMS,
-        'all_pages': pages,
-        'recent_pages': recent_pages,
-        'current_url': 'archive.html',
-    }
-    with open(output_dir / 'archive.html', 'w', encoding='utf-8') as f:
-        f.write(template.render(archive_context))
+    return md.convert(cleaned_text)
 
-    # 8. Auto-generate index.html if not already created by processing content files
-    if not (output_dir / 'index.html').exists():
-        recent_posts_html = '<ul class="archive-list">'
-        # Display recent posts
-        for page in recent_pages:
-            recent_posts_html += f'<li><div class="date-container"><span class="date">{page["date_iso"]}</span></div><a href="{page["url"]}">{page["title"]}</a></li>'
-        recent_posts_html += "</ul>"
-        
-        index_context = {
-            'site_name': config.SITE_NAME,
-            'page_title': config.SITE_NAME,
-            'content': f"<h2>Welcome</h2><p>Welcome to {config.SITE_NAME}.</p><h3>Recent Pages</h3>{recent_posts_html}",
-            'meta': {},
-            'copyright': config.COPYRIGHT,
-            'google_analytics_id': config.GOOGLE_ANALYTICS_ID,
-            'menu_items': config.MENU_ITEMS,
-            'all_pages': pages,
-            'recent_pages': recent_pages,
-            'current_url': 'index.html',
-        }
-        with open(output_dir / 'index.html', 'w', encoding='utf-8') as f:
-            f.write(template.render(index_context))
-        count += 1
-            
-    print(f"Build complete. {count} pages generated in '{output_dir}'.")
 
-if __name__ == "__main__":
-    build()
+
+def extract_slug(filename):
+    return Path(filename).stem
+
+
+# --------------------------------------------------
+# templates
+# --------------------------------------------------
+
+BASE_TEMPLATE = read_file(TEMPLATES_DIR / "base.html")
+POST_TEMPLATE = read_file(TEMPLATES_DIR / "post.html")
+INDEX_TEMPLATE = read_file(TEMPLATES_DIR / "index.html")
+
+
+def render(template, **kwargs):
+
+    html = template
+
+    for k, v in kwargs.items():
+        html = html.replace(
+            "{{" + k + "}}",
+            str(v)
+        )
+
+    return html
+
+
+# --------------------------------------------------
+# build
+# --------------------------------------------------
+
+posts = []
+warnings = []
+errors = []
+
+
+def build_posts():
+
+    for md_file in POSTS_DIR.glob("*.md"):
+
+        try:
+
+            raw = read_file(md_file)
+
+            meta, body = parse_frontmatter(raw)
+
+            title = meta.get(
+                "title",
+                extract_title(body, md_file.stem)
+            )
+
+            date = meta.get(
+                "date",
+                ""
+            )
+
+            modified = meta.get(
+                "modified",
+                date
+            )
+
+            summary = meta.get(
+                "summary",
+                ""
+            )
+
+            slug = extract_slug(md_file.name)
+
+            html = markdown_to_html(body)
+
+            modified_html = ""
+            if modified and modified != date:
+                modified_html = f' <span class="update"><span class="update-label">UPDATE</span> {modified}</span>'
+
+            meta_html = f'<div class="date-container"><span class="date">{date}</span>{modified_html}</div>'
+
+            content = render(
+                POST_TEMPLATE,
+                title=title,
+                meta_html=meta_html,
+                content=html,
+            )
+
+
+            desc = summary if summary else clean_html_to_text(html)[:140]
+
+            page = render(
+                BASE_TEMPLATE,
+                page_title=title,
+                site_name=SITE_NAME,
+                content=content,
+                description=desc,
+                page_url=f"{SITE_URL}/{slug}.html",
+                og_type="article",
+            )
+
+            write_file(
+                OUTPUT_DIR / f"{slug}.html",
+                page
+            )
+
+            posts.append({
+                "title": title,
+                "date": date,
+                "modified": modified,
+                "slug": slug,
+                "summary": summary,
+                "content": content,
+            })
+
+            print(f"[OK] {md_file.name}")
+
+        except Exception as e:
+
+            errors.append(str(e))
+
+            print(
+                f"[ERROR] {md_file.name}: {e}"
+            )
+
+
+
+def build_pages():
+
+    for md_file in PAGES_DIR.glob("*.md"):
+
+        try:
+
+            raw = read_file(md_file)
+
+            meta, body = parse_frontmatter(raw)
+
+            title = meta.get(
+                "title",
+                extract_title(body, md_file.stem)
+            )
+
+            html = markdown_to_html(body)
+
+            content = render(
+                POST_TEMPLATE,
+                title=title,
+                meta_html="",
+                content=html,
+            )
+
+
+            desc = clean_html_to_text(html)[:140]
+
+            page = render(
+                BASE_TEMPLATE,
+                page_title=title,
+                site_name=SITE_NAME,
+                content=content,
+                description=desc,
+                page_url=f"{SITE_URL}/{md_file.stem}.html",
+                og_type="website",
+            )
+
+            write_file(
+                OUTPUT_DIR / f"{md_file.stem}.html",
+                page
+            )
+
+            print(f"[OK] {md_file.name}")
+
+        except Exception as e:
+
+            errors.append(str(e))
+
+            print(
+                f"[ERROR] {md_file.name}: {e}"
+            )
+
+
+
+def build_index():
+
+    posts.sort(
+        key=lambda p: p["date"],
+        reverse=True
+    )
+
+    latest_html = ""
+
+    if posts:
+
+        p = posts[0]
+
+        latest_html = p["content"]
+
+    items = []
+
+    # Display remaining posts in the list (excluding the latest one)
+    for p in posts[1:]:
+
+        update_html = ""
+        if p["modified"] and p["modified"] != p["date"]:
+            update_html = f' <span class="update"><span class="update-label">UPDATE</span> {p["modified"]}</span>'
+
+        items.append(
+            f'<li>'
+            f'  <div class="date-container">'
+            f'    <span class="date">{p["date"]}</span>{update_html}'
+            f'  </div>'
+            f'  <a href="{p["slug"]}.html">{p["title"]}</a>'
+            f'</li>'
+        )
+
+    index_content = render(
+        INDEX_TEMPLATE,
+        latest=latest_html,
+        posts="\n".join(items),
+    )
+
+    site_desc = posts[0]["summary"] if (posts and posts[0]["summary"]) else "bluntbangs blog"
+
+    page = render(
+        BASE_TEMPLATE,
+        page_title=SITE_NAME,
+        site_name=SITE_NAME,
+        content=index_content,
+        description=site_desc,
+        page_url=f"{SITE_URL}/",
+        og_type="website",
+    )
+
+    write_file(
+        OUTPUT_DIR / "index.html",
+        page
+    )
+
+
+
+def build_rss():
+
+    posts.sort(
+        key=lambda p: p["date"],
+        reverse=True
+    )
+
+    items = []
+
+    for p in posts[:30]:
+
+        items.append(
+f"""
+<item>
+<title>{p['title']}</title>
+<link>{SITE_URL}/{p['slug']}.html</link>
+<guid>{SITE_URL}/{p['slug']}.html</guid>
+<description>{p['summary']}</description>
+</item>
+"""
+        )
+
+    rss = f"""<?xml version="1.0" encoding="UTF-8"?>
+
+<rss version="2.0">
+<channel>
+
+<title>{SITE_NAME}</title>
+<link>{SITE_URL}</link>
+
+{''.join(items)}
+
+</channel>
+</rss>
+"""
+
+    write_file(
+        OUTPUT_DIR / "rss.xml",
+        rss
+    )
+
+
+def copy_assets():
+
+    if not ASSETS_DIR.exists():
+        return
+
+    for item in ASSETS_DIR.iterdir():
+
+        dest = OUTPUT_DIR / item.name
+
+        if item.is_dir():
+            shutil.copytree(
+                item,
+                dest,
+                dirs_exist_ok=True
+            )
+        else:
+            shutil.copy2(
+                item,
+                dest
+            )
+
+
+def clean():
+
+    if OUTPUT_DIR.exists():
+        shutil.rmtree(
+            OUTPUT_DIR
+        )
+
+    OUTPUT_DIR.mkdir(
+        parents=True
+    )
+
+
+# --------------------------------------------------
+# main
+# --------------------------------------------------
+
+clean()
+
+copy_assets()
+
+build_posts()
+
+build_pages()
+
+build_index()
+
+build_rss()
+
+print()
+print("--------------------------------")
+print("Build Summary")
+print("--------------------------------")
+print(f"Posts  : {len(posts)}")
+print(f"Errors : {len(errors)}")
+print("--------------------------------")

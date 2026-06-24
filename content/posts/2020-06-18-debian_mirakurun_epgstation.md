@@ -1,22 +1,13 @@
 ---
-title: Mirakurun + EPGStation on Debian 10 (Buster)
-date: 2020-06-18 16:11
-modified: 2020-09-17 17:22
-author: Koichiro Yamada
-category: development
-tags: debian
-slug: debian_mirakurun_epgstation
-related_posts: 
-cover: images/temp-cover.jpg
-thumbnail: images/temp-thumbnail.jpg
-summary: Debian GNU/Linux 10 Buster上でアースソフトのPT2を利用してテレビ番組録画環境を構築しました。MirakurunとEPGStationを使いこなせているかまでは不明です。
+Title: Mirakurun + EPGStation on Debian 10 (Buster)
+Date: 2020-06-18 16:11
+Modified: 2020-09-17 17:22
+Summary: Debian GNU/Linux 10 Buster上でアースソフトのPT2を利用してテレビ番組録画環境を構築しました。MirakurunとEPGStationを使いこなせているかまでは不明です。
 ---
 
 [link-debian-amd64-netinst]: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/
 [link-Mirakurun]: https://github.com/Chinachu/Mirakurun
 [link-EPGStation]: https://github.com/l3tnun/EPGStation
-
-[TOC]
 
 # PCを使った録画環境
 

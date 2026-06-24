@@ -1,68 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mirakurun + EPGStation on Debian 10 (Buster) | bluntbangs</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico">
-    
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-405M9FNRRJ"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-405M9FNRRJ');
-    </script>
-    
-</head>
-<body>
-    <header class="site-header">
-        <div class="container">
-            <h1><a href="index.html">bluntbangs</a></h1>
-            <nav>
-                <ul>
-                    
-                    <li><a href="index.html">Home</a></li>
-                    
-                    <li><a href="archive.html">Archives</a></li>
-                    
-                </ul>
-            </nav>
-        </div>
-    </header>
-    
-    <main class="container">
-        
-        <header class="article-header">
-            <h1 class="article-title">Mirakurun + EPGStation on Debian 10 (Buster)</h1>
-            <div style="color: #86868b; font-family: 'SF Mono', monospace; font-size: 0.9rem;">
-                <span>2020-06-18 16:11</span>
-                
-            </div>
-        </header>
-        
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <p>[TOC]</p>
+<title>Mirakurun + EPGStation on Debian 10 (Buster)</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- OGP / Social Graph -->
+<meta property="og:title" content="Mirakurun + EPGStation on Debian 10 (Buster)">
+<meta property="og:description" content="Debian GNU/Linux 10 Buster上でアースソフトのPT2を利用してテレビ番組録画環境を構築しました。MirakurunとEPGStationを使いこなせているかまでは不明です。">
+<meta property="og:url" content="https://www.bluntbangs.com/2020-06-18-debian_mirakurun_epgstation.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="bluntbangs">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body>
+
+<header class="site-header">
+<div class="container">
+    <h1><a href="/">bluntbangs</a></h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/policy.html">Policy</a></li>
+            <li><a href="/rss.xml">RSS</a></li>
+        </ul>
+    </nav>
+</div>
+</header>
+
+<main class="container">
+<article>
+<header class="article-header">
+    <h1 class="article-title">Mirakurun + EPGStation on Debian 10 (Buster)</h1>
+    <div class="date-container"><span class="date">2020-06-18 16:11</span> <span class="update"><span class="update-label">UPDATE</span> 2020-09-17 17:22</span></div>
+</header>
+
+<div class="article-content">
 <h1>PCを使った録画環境</h1>
 <p>PCでテレビ番組を録画する際に必要なものはチューナーです。</p>
 <p>私はずっとアースソフトのPT2を使っています。PC自体はNECのサーバであるExpress5800/S70タイプRB。いわゆる鼻毛鯖を2010年から使っていました。組み立ててしばらくしたら東日本大震災が発生してましたね。かれこれ10年経過していますがあっという間です。そしてPT2はまだまだ現役です。</p>
 <p>2020年を前に、経年劣化しつつある各種部品の更新をかねて録画サーバーを更新しました。</p>
 <p>当初はPCIスロットを装備したマザーボードで組んでみましたが、先を見越してPCI-ExpressスロットにPCI拡張カードを変換して利用することにしました。</p>
-<p>|パーツ|製品|
-|:---|:---|
-|マザーボード|ASUS アスース H310M-E R2.0|
-|CPU|Intel インテル BX80684G4920 [CPU Celeron G4920]|
-|CPUクーラー|リテール品|
-|メモリ|ADATA エーデータ DDR4-2666MHz CL19 288Pin DIMM デスクトップPC用メモリ 8GB×1枚|
-|電源|ANTEC アンテック NE550 GOLD|
-|SSD|A-DATA エーデータ ASU650SS-120GT-R [SSD 120GB]|
-|HDD|手持ちの2TB|
-|拡張ボード|AREA エアリア SD-PECPCiRi2 [拡張ボードの旧世主 第二章]|
-|拡張ボード|アースソフト PT2|
-|ケース|Thermaltake サーマルテイク Versa H18 |</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">パーツ</th>
+<th style="text-align: left;">製品</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">マザーボード</td>
+<td style="text-align: left;">ASUS アスース H310M-E R2.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">CPU</td>
+<td style="text-align: left;">Intel インテル BX80684G4920 [CPU Celeron G4920]</td>
+</tr>
+<tr>
+<td style="text-align: left;">CPUクーラー</td>
+<td style="text-align: left;">リテール品</td>
+</tr>
+<tr>
+<td style="text-align: left;">メモリ</td>
+<td style="text-align: left;">ADATA エーデータ DDR4-2666MHz CL19 288Pin DIMM デスクトップPC用メモリ 8GB×1枚</td>
+</tr>
+<tr>
+<td style="text-align: left;">電源</td>
+<td style="text-align: left;">ANTEC アンテック NE550 GOLD</td>
+</tr>
+<tr>
+<td style="text-align: left;">SSD</td>
+<td style="text-align: left;">A-DATA エーデータ ASU650SS-120GT-R [SSD 120GB]</td>
+</tr>
+<tr>
+<td style="text-align: left;">HDD</td>
+<td style="text-align: left;">手持ちの2TB</td>
+</tr>
+<tr>
+<td style="text-align: left;">拡張ボード</td>
+<td style="text-align: left;">AREA エアリア SD-PECPCiRi2 [拡張ボードの旧世主 第二章]</td>
+</tr>
+<tr>
+<td style="text-align: left;">拡張ボード</td>
+<td style="text-align: left;">アースソフト PT2</td>
+</tr>
+<tr>
+<td style="text-align: left;">ケース</td>
+<td style="text-align: left;">Thermaltake サーマルテイク Versa H18</td>
+</tr>
+</tbody>
+</table>
 <p>上記構成で相性問題などはまった発生しませんでした。</p>
 <p>エアリアの「拡張ボードの旧世主第二章」はPCIボードへの電源供給や固定するブラケットなどよく考えられた仕様だったので購入。もちろんPT2も動作確認できました。もう少しシンプルなものならAliExpressで2000円付近で入手可能なのでそちらでも良いと思います。ひと月も待てば届くはず。</p>
 <p>問題が発生したのは当初用意したAntecの電源。NeoEcoシリーズの電源はSeasonic（シーソニック）のOEM品だから非常に高品質である！……なんてネットのレビューがありますが不具合続出でした。購入してファンを下向きにしケースに設置するとファンとファンガードが干渉してカラカラと音がなりました。工作精度がどうもよくない模様です。初期不良交換。</p>
@@ -1057,32 +1089,21 @@ echo &quot;[INFO] `date &quot;+%Y-%m-%d %T&quot;` [x265][$TASK_NO] script dismis
 <p>crontabで定時で起動するスクリプトにしました。自身がすでに稼働していたら終了。また、先のwowow用スクリプトを念頭にTsSplitterやHandbrakeが起動していたら動作を終了します。何もしていなかったら指定したフォルダのTSファイルをH265に順次エンコードするというのがおおまかな動作内容です。</p>
 <p>もっとスマートなやり方があると思いますが、動きゃいいんだよでそのままです。とても安定しておりますね。</p>
 <p>いまのところ、こんな感じで動作していますが、環境によってはFirewallなんかもあわせて設定する必要があるでしょうね。</p>
+</div>
+</article>
 
-        
-        <nav class="article-navigation">
-            <div class="nav-previous">
-                
-                <a href="policy.html">&larr; Privacy Policy & Disclaimer</a>
-                
-            </div>
-            <div class="nav-next">
-                
-                <a href="raspiir.html">Raspberry Piで作るはじめての赤外線リモコン &rarr;</a>
-                
-            </div>
-        </nav>
-        
 
-        
-    </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="footer-content">
-                <span>© 2026 bluntbangs</span>
-                <a href="policy.html" class="footer-link">Privacy Policy</a>
-            </div>
-        </div>
-    </footer>
+</main>
+
+<footer class="site-footer">
+<div class="container footer-content">
+    <p>© bluntbangs</p>
+    <a href="/policy.html" class="footer-link">Privacy Policy</a>
+</div>
+</footer>
+
 </body>
 </html>
+
+
