@@ -187,9 +187,16 @@ li {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
+
+.footer-content p {
+    margin: 0;
+}
+
 
 .footer-link {
     color: #515154;
