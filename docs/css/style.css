@@ -185,23 +185,23 @@ li {
 }
 
 
-.footer-content {
+.footer-content p {
+    margin: 0;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 20px;
     flex-wrap: wrap;
+    font-size: 0.8rem;
+    color: #86868b;
 }
-
-.footer-content p {
-    margin: 0;
-}
-
 
 .footer-link {
-    color: #515154;
+    color: #86868b;
     text-decoration: none;
+    font-size: 0.8rem;
 }
+
 
 .footer-link:hover {
     text-decoration: underline;
@@ -325,13 +325,9 @@ li {
 }
 
 .article-header .update-label {
-    background-color: #f5f5f7;
-    color: #515154;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-weight: normal;
 }
+
 
 /* Hide empty metadata elements to keep layout clean */
 .article-header .date:empty,
