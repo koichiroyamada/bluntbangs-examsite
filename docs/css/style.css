@@ -146,16 +146,15 @@ ul {
 }
 
 .archive-list .date {
-    color: #1d1d1f;
+    color: #6e6e73;
     font-size: 0.9rem;
-    font-family: "SF Mono", "Menlo", "Consolas", "Courier New", monospace; /* 等幅フォントで完全に揃える */
 }
 
 .archive-list .update {
-    color: #86868b;
+    color: #6e6e73;
     font-size: 0.9rem;
-    font-family: "SF Mono", "Menlo", "Consolas", "Courier New", monospace;
 }
+
 
 .update-label {
     font-size: 0.7em;
@@ -190,17 +189,21 @@ li {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: 20px;
     flex-wrap: wrap;
-    font-size: 0.8rem;
-    color: #86868b;
 }
 
+.footer-content span.copyright,
 .footer-link {
-    color: #86868b;
-    text-decoration: none;
     font-size: 0.8rem;
+    color: #6e6e73;
+    margin-right: 20px;
+    text-decoration: none;
 }
+
+.footer-link:last-child {
+    margin-right: 0;
+}
+
 
 
 .footer-link:hover {
@@ -314,15 +317,16 @@ li {
     flex-wrap: wrap;
     gap: 8px 16px;
     align-items: center;
-    color: #86868b;
+    color: #6e6e73;
     font-size: 0.9rem;
     margin-top: 16px;
     padding-left: 21px; /* Align with .article-title text start */
 }
 
 .article-header .update {
-    color: #86868b;
+    color: #6e6e73;
 }
+
 
 .article-header .update-label {
     font-weight: normal;
