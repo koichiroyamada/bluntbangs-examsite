@@ -132,7 +132,7 @@ ul {
     display: flex;
     align-items: baseline;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .archive-list .date-container {
@@ -269,7 +269,7 @@ li {
     justify-content: space-between;
     margin-top: 4rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(0,0,0,0.3);
+    border-top: 1px solid rgba(0,0,0,0.0.5);
     margin-bottom: 4rem;
 }
 
@@ -293,7 +293,7 @@ li {
     margin-top: 2.5em;
     margin-bottom: 1em;
     padding-bottom: 0.3em;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.0.5);
 }
 
 .article-content h3 {
@@ -308,7 +308,7 @@ li {
     border-radius: 8px;
     margin: 2em auto;
     display: block;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 /* Date meta styles in article header */
