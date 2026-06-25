@@ -219,7 +219,9 @@ def build_posts():
                 "slug": slug,
                 "summary": summary,
                 "content": content,
+                "body_html": html,
             })
+
 
             print(f"[OK] {md_file.name}")
 
@@ -289,6 +291,26 @@ def build_pages():
 
 
 
+def get_preview_html(html_text, min_chars=300):
+    # Extract <p>...</p> tags
+    p_tags = re.findall(r'<p>.*?</p>', html_text, re.DOTALL)
+    preview_paragraphs = []
+    current_length = 0
+    for p_tag in p_tags:
+        preview_paragraphs.append(p_tag)
+        # Count characters excluding tags
+        plain_text = re.sub(r'<[^>]+>', '', p_tag)
+        current_length += len(plain_text)
+        if current_length >= min_chars:
+            break
+
+    # Guarantee at least 2 paragraphs if available
+    if len(preview_paragraphs) < 2 and len(p_tags) >= 2:
+        preview_paragraphs = p_tags[:2]
+
+    return "\n".join(preview_paragraphs)
+
+
 def build_index():
 
     posts.sort(
@@ -302,7 +324,37 @@ def build_index():
 
         p = posts[0]
 
-        latest_html = p["content"]
+        # Generate excerpt (preview) HTML
+        preview_body = get_preview_html(p["body_html"])
+        
+        # Add "Read more" link
+        read_more_html = (
+            f'<p class="read-more">'
+            f'  <a href="{p["slug"]}.html">「{p["title"]}」の続きを読む &rarr;</a>'
+            f'</p>'
+        )
+        if preview_body:
+            preview_body += "\n" + read_more_html
+        else:
+            preview_body = read_more_html
+
+        # Re-render latest post preview using POST_TEMPLATE
+        formatted_date = format_date_only(p["date"])
+        formatted_modified = format_date_only(p["modified"])
+
+        published_txt = f"投稿日: {formatted_date}" if formatted_date else ""
+        modified_txt = ""
+        if formatted_modified and formatted_modified != formatted_date:
+            modified_txt = f"更新日: {formatted_modified}"
+
+        latest_html = render(
+            POST_TEMPLATE,
+            title=p["title"],
+            published_date=published_txt,
+            modified_date=modified_txt,
+            content=preview_body,
+        )
+
 
     items = []
 

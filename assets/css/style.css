@@ -194,7 +194,7 @@ li {
 
 .footer-content span.copyright,
 .footer-link {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
     color: #6e6e73;
     margin-right: 20px;
     text-decoration: none;
@@ -343,3 +343,20 @@ li {
 .article-header .date-container:has(.date:empty):has(.update:empty) {
     display: none;
 }
+
+/* Style for "Read More" link on the index page */
+.read-more {
+    margin-top: 2rem;
+    font-size: 1.05rem;
+}
+
+.read-more a {
+    color: #0066cc;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.read-more a:hover {
+    color: #004499;
+}
+
