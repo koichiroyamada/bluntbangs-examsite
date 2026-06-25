@@ -377,4 +377,20 @@ li {
     text-decoration: underline;
 }
 
+/* Style for the latest post label */
+.article-header .latest-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #86868b;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.article-header .latest-label:empty {
+    display: none;
+}
+
+
 

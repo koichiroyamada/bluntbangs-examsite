@@ -191,6 +191,7 @@ def build_posts():
                 published_date=published_txt,
                 modified_date=modified_txt,
                 content=html,
+                latest_label="",
             )
 
 
@@ -258,6 +259,7 @@ def build_pages():
                 published_date="",
                 modified_date="",
                 content=html,
+                latest_label="",
             )
 
 
@@ -356,6 +358,7 @@ def build_index():
             published_date=published_txt,
             modified_date=modified_txt,
             content=preview_body,
+            latest_label="LATEST POST",
         )
 
 
