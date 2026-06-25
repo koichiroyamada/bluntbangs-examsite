@@ -360,3 +360,21 @@ li {
     color: #004499;
 }
 
+/* Styling updates for the latest post header on the index page */
+.latest-post-area .article-title {
+    font-size: 1.8rem;
+    border-left: none;
+    padding-left: 0;
+}
+
+.latest-post-area .article-title a {
+    color: #1d1d1f;
+    text-decoration: none;
+}
+
+.latest-post-area .article-title a:hover {
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+

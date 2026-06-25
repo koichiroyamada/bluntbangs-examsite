@@ -347,13 +347,17 @@ def build_index():
         if formatted_modified and formatted_modified != formatted_date:
             modified_txt = f"更新日: {formatted_modified}"
 
+        # Make the title a link to the individual post page on the index page
+        title_link = f'<a href="{p["slug"]}.html">{p["title"]}</a>'
+
         latest_html = render(
             POST_TEMPLATE,
-            title=p["title"],
+            title=title_link,
             published_date=published_txt,
             modified_date=modified_txt,
             content=preview_body,
         )
+
 
 
     items = []
