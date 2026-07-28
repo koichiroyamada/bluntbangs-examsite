@@ -5,6 +5,7 @@ import markdown
 
 SITE_NAME = "bluntbangs"
 SITE_URL = "https://www.bluntbangs.com"
+SITE_DESCRIPTION = "bluntbangsの個人ブログ。放送大学での勉強日記や学習の記録を中心に、PC・IT関連の技術メモなど、日々の多様な学びや興味のある活動についてゆるやかに綴る記録サイトです。"
 
 CONTENT_DIR = Path("content")
 POSTS_DIR = CONTENT_DIR / "posts"
@@ -200,7 +201,7 @@ def build_posts():
 
             page = render(
                 BASE_TEMPLATE,
-                page_title=title,
+                page_title=f"{title} | {SITE_NAME}",
                 site_name=SITE_NAME,
                 content=content,
                 description=desc,
@@ -268,7 +269,7 @@ def build_pages():
 
             page = render(
                 BASE_TEMPLATE,
-                page_title=title,
+                page_title=f"{title} | {SITE_NAME}",
                 site_name=SITE_NAME,
                 content=content,
                 description=desc,
@@ -388,14 +389,12 @@ def build_index():
         posts="\n".join(items),
     )
 
-    site_desc = posts[0]["summary"] if (posts and posts[0]["summary"]) else "bluntbangs blog"
-
     page = render(
         BASE_TEMPLATE,
         page_title=SITE_NAME,
         site_name=SITE_NAME,
         content=index_content,
-        description=site_desc,
+        description=SITE_DESCRIPTION,
         page_url=f"{SITE_URL}/",
         og_type="website",
     )
