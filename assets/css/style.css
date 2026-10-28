@@ -131,28 +131,16 @@ ul {
 .archive-list li {
     display: flex;
     align-items: baseline;
-    padding: 8px 0;
+    gap: 20px;
+    padding: 12px 0;
     border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.archive-list .date-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-right: 0;
+.archive-list .archive-date {
+    color: #6e6e73;
+    font-size: 0.9rem;
     width: 10.8rem; /* 幅を詰めてタイトルとの距離を縮める */
     flex-shrink: 0;
-    line-height: 1.4;
-}
-
-.archive-list .date {
-    color: #6e6e73;
-    font-size: 0.9rem;
-}
-
-.archive-list .update {
-    color: #6e6e73;
-    font-size: 0.9rem;
 }
 
 
@@ -230,13 +218,10 @@ li {
     .archive-list li {
         flex-direction: column;
         align-items: flex-start;
+        gap: 4px;
     }
-    .archive-list .date-container {
+    .archive-list .archive-date {
         width: 100%;
-        flex-direction: row;
-        align-items: baseline;
-        margin-bottom: 4px;
-        gap: 0.8em;
     }
     .article-navigation {
         flex-direction: column;
@@ -344,53 +329,60 @@ li {
     display: none;
 }
 
-/* Style for "Read More" link on the index page */
-.read-more {
-    margin-top: 2rem;
-    font-size: 1.05rem;
+.latest-post-area {
+    margin-bottom: 3rem;
 }
 
-.read-more a {
-    color: #0066cc;
-    text-decoration: underline;
-    font-weight: 600;
+.latest-article {
+    padding: 24px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    background-color: #f5f5f7;
 }
 
-.read-more a:hover {
-    color: #004499;
-}
-
-/* Styling updates for the latest post header on the index page */
-.latest-post-area .article-title {
-    font-size: 1.8rem;
-    border-left: none;
-    padding-left: 0;
-}
-
-.latest-post-area .article-title a {
-    color: #1d1d1f;
-    text-decoration: none;
-}
-
-.latest-post-area .article-title a:hover {
-    color: #0066cc;
-    text-decoration: underline;
-}
-
-/* Style for the latest post label */
-.article-header .latest-label {
+.latest-label {
     display: block;
     font-size: 0.75rem;
     font-weight: 700;
     color: #86868b;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 8px;
+    margin: 0 0 8px;
 }
 
-.article-header .latest-label:empty {
-    display: none;
+.latest-title {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin: 0 0 8px;
 }
 
+.latest-date,
+.latest-summary {
+    margin: 0 0 12px;
+}
 
+.latest-date {
+    color: #6e6e73;
+    font-size: 0.9rem;
+}
+
+.latest-link {
+    display: inline-block;
+    margin-top: 4px;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.archive-section {
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0,0,0,0.15);
+}
+
+.archive-section h2 {
+    margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .latest-article {
+        padding: 20px;
+    }
+}
 

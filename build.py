@@ -306,41 +306,38 @@ def build_index():
         p = posts[0]
 
         formatted_date = format_date_only(p["date"])
-        published_txt = f"投稿日: {formatted_date}" if formatted_date else ""
-
-        title_link = f'<a href="{p["slug"]}.html">{p["title"]}</a>'
+        published_html = (
+            f'<p class="latest-date">投稿日: {escape(formatted_date)}</p>'
+            if formatted_date
+            else ""
+        )
         summary_html = (
-            f'<p>{escape(p["summary"])}</p>'
+            f'<p class="latest-summary">{escape(p["summary"])}</p>'
             if p["summary"]
             else ""
         )
-
-        latest_html = render(
-            POST_TEMPLATE,
-            title=title_link,
-            published_date=published_txt,
-            modified_date="",
-            content=summary_html,
-            latest_label="最新記事",
+        latest_html = (
+            '<article class="latest-article">'
+            '<p class="latest-label">最新記事</p>'
+            f'<h2 class="latest-title">{escape(p["title"])}</h2>'
+            f'{published_html}'
+            f'{summary_html}'
+            f'<a class="latest-link" href="{escape(p["slug"], quote=True)}.html">記事を読む</a>'
+            '</article>'
         )
-
-
 
     items = []
 
-    # Display remaining posts in the list (excluding the latest one)
-    for p in posts[1:]:
+    for p in posts:
 
         formatted_date = format_date_only(p["date"])
-        display_date = f"投稿日: {formatted_date}" if formatted_date else ""
+        display_date = escape(formatted_date)
 
         items.append(
-            f'<li>'
-            f'  <div class="date-container">'
-            f'    <span class="date">{display_date}</span>'
-            f'  </div>'
-            f'  <a href="{p["slug"]}.html">{p["title"]}</a>'
-            f'</li>'
+            '<li>'
+            f'<time class="archive-date" datetime="{escape(formatted_date, quote=True)}">{display_date}</time>'
+            f'<a href="{escape(p["slug"], quote=True)}.html">{escape(p["title"])}</a>'
+            '</li>'
         )
 
 
