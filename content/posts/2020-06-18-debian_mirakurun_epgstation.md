@@ -2,7 +2,7 @@
 Title: Mirakurun + EPGStation on Debian 10 (Buster)
 Date: 2020-06-18 16:11
 Modified: 2020-09-17 17:22
-Summary: Debian GNU/Linux 10 Buster上でアースソフトのPT2を利用してテレビ番組録画環境を構築しました。MirakurunとEPGStationを使いこなせているかまでは不明です。
+Summary: Debian 10（Buster）にPT2を接続し、MirakurunとEPGStationを使った録画サーバーを構築した記録です。OSのセットアップから録画・エンコード環境の設定までをまとめています。
 ---
 
 [link-debian-amd64-netinst]: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/

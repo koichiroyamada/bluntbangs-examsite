@@ -1,11 +1,12 @@
 import re
 import shutil
+from html import escape
 from pathlib import Path
 import markdown
 
 SITE_NAME = "bluntbangs"
 SITE_URL = "https://www.bluntbangs.com"
-SITE_DESCRIPTION = "bluntbangsの個人ブログ。放送大学での勉強日記や学習の記録を中心に、PC・IT関連の技術メモなど、日々の多様な学びや興味のある活動についてゆるやかに綴る記録サイトです。"
+SITE_DESCRIPTION = "bluntbangsの個人サイトです。日々の記録や、興味を持ったことを掲載しています。"
 
 CONTENT_DIR = Path("content")
 POSTS_DIR = CONTENT_DIR / "posts"
@@ -139,7 +140,6 @@ def render(template, **kwargs):
 # --------------------------------------------------
 
 posts = []
-warnings = []
 errors = []
 
 
@@ -204,7 +204,7 @@ def build_posts():
                 page_title=f"{title} | {SITE_NAME}",
                 site_name=SITE_NAME,
                 content=content,
-                description=desc,
+                description=escape(desc, quote=True),
                 page_url=f"{SITE_URL}/{slug}.html",
                 og_type="article",
             )
@@ -220,19 +220,17 @@ def build_posts():
                 "modified": modified,
                 "slug": slug,
                 "summary": summary,
-                "content": content,
-                "body_html": html,
             })
 
 
-            print(f"[OK] {md_file.name}")
+            print(f"[生成] {md_file.name}")
 
         except Exception as e:
 
-            errors.append(str(e))
+            errors.append(f"{md_file}: {e}")
 
             print(
-                f"[ERROR] {md_file.name}: {e}"
+                f"[エラー] {md_file.name}: {e}"
             )
 
 
@@ -272,7 +270,7 @@ def build_pages():
                 page_title=f"{title} | {SITE_NAME}",
                 site_name=SITE_NAME,
                 content=content,
-                description=desc,
+                description=escape(desc, quote=True),
                 page_url=f"{SITE_URL}/{md_file.stem}.html",
                 og_type="website",
             )
@@ -282,36 +280,16 @@ def build_pages():
                 page
             )
 
-            print(f"[OK] {md_file.name}")
+            print(f"[生成] {md_file.name}")
 
         except Exception as e:
 
-            errors.append(str(e))
+            errors.append(f"{md_file}: {e}")
 
             print(
-                f"[ERROR] {md_file.name}: {e}"
+                f"[エラー] {md_file.name}: {e}"
             )
 
-
-
-def get_preview_html(html_text, min_chars=300):
-    # Extract <p>...</p> tags
-    p_tags = re.findall(r'<p>.*?</p>', html_text, re.DOTALL)
-    preview_paragraphs = []
-    current_length = 0
-    for p_tag in p_tags:
-        preview_paragraphs.append(p_tag)
-        # Count characters excluding tags
-        plain_text = re.sub(r'<[^>]+>', '', p_tag)
-        current_length += len(plain_text)
-        if current_length >= min_chars:
-            break
-
-    # Guarantee at least 2 paragraphs if available
-    if len(preview_paragraphs) < 2 and len(p_tags) >= 2:
-        preview_paragraphs = p_tags[:2]
-
-    return "\n".join(preview_paragraphs)
 
 
 def build_index():
@@ -327,39 +305,23 @@ def build_index():
 
         p = posts[0]
 
-        # Generate excerpt (preview) HTML
-        preview_body = get_preview_html(p["body_html"])
-        
-        # Add "Read more" link
-        read_more_html = (
-            f'<p class="read-more">'
-            f'  <a href="{p["slug"]}.html">「{p["title"]}」の続きを読む &rarr;</a>'
-            f'</p>'
-        )
-        if preview_body:
-            preview_body += "\n" + read_more_html
-        else:
-            preview_body = read_more_html
-
-        # Re-render latest post preview using POST_TEMPLATE
         formatted_date = format_date_only(p["date"])
-        formatted_modified = format_date_only(p["modified"])
-
         published_txt = f"投稿日: {formatted_date}" if formatted_date else ""
-        modified_txt = ""
-        if formatted_modified and formatted_modified != formatted_date:
-            modified_txt = f"更新日: {formatted_modified}"
 
-        # Make the title a link to the individual post page on the index page
         title_link = f'<a href="{p["slug"]}.html">{p["title"]}</a>'
+        summary_html = (
+            f'<p>{escape(p["summary"])}</p>'
+            if p["summary"]
+            else ""
+        )
 
         latest_html = render(
             POST_TEMPLATE,
             title=title_link,
             published_date=published_txt,
-            modified_date=modified_txt,
-            content=preview_body,
-            latest_label="LATEST POST",
+            modified_date="",
+            content=summary_html,
+            latest_label="最新記事",
         )
 
 
@@ -394,7 +356,7 @@ def build_index():
         page_title=SITE_NAME,
         site_name=SITE_NAME,
         content=index_content,
-        description=SITE_DESCRIPTION,
+        description=escape(SITE_DESCRIPTION, quote=True),
         page_url=f"{SITE_URL}/",
         og_type="website",
     )
@@ -404,48 +366,6 @@ def build_index():
         page
     )
 
-
-
-def build_rss():
-
-    posts.sort(
-        key=lambda p: p["date"],
-        reverse=True
-    )
-
-    items = []
-
-    for p in posts[:30]:
-
-        items.append(
-f"""
-<item>
-<title>{p['title']}</title>
-<link>{SITE_URL}/{p['slug']}.html</link>
-<guid>{SITE_URL}/{p['slug']}.html</guid>
-<description>{p['summary']}</description>
-</item>
-"""
-        )
-
-    rss = f"""<?xml version="1.0" encoding="UTF-8"?>
-
-<rss version="2.0">
-<channel>
-
-<title>{SITE_NAME}</title>
-<link>{SITE_URL}</link>
-
-{''.join(items)}
-
-</channel>
-</rss>
-"""
-
-    write_file(
-        OUTPUT_DIR / "rss.xml",
-        rss
-    )
 
 
 def copy_assets():
@@ -482,26 +402,24 @@ def clean():
     )
 
 
-# --------------------------------------------------
-# main
-# --------------------------------------------------
+def main():
+    clean()
+    copy_assets()
+    build_posts()
+    build_pages()
+    build_index()
 
-clean()
+    print()
+    print("--------------------------------")
+    print("ビルド結果")
+    print("--------------------------------")
+    print(f"記事数: {len(posts)}")
+    print(f"エラー: {len(errors)}")
+    print("--------------------------------")
 
-copy_assets()
+    if errors:
+        raise SystemExit(1)
 
-build_posts()
 
-build_pages()
-
-build_index()
-
-build_rss()
-
-print()
-print("--------------------------------")
-print("Build Summary")
-print("--------------------------------")
-print(f"Posts  : {len(posts)}")
-print(f"Errors : {len(errors)}")
-print("--------------------------------")
+if __name__ == "__main__":
+    main()
