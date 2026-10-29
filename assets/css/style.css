@@ -138,11 +138,10 @@ h2 {
     margin-top: 2em;
     margin-bottom: 20px;
     padding: 4px 8px;
-    border: 5px ridge #fff;
+    border: 5px outset #fff;
     background: #c0c0c0;
     color: #000080;
     font-size: 1.55rem;
-    text-shadow: 1px 1px #fff, 2px 2px #808080;
 }
 
 p {
@@ -278,12 +277,11 @@ th {
 .article-title {
     margin: 0 0 0.5em;
     padding: 8px 12px;
-    border: 6px ridge #fff;
+    border: 6px outset #fff;
     background: #c0c0c0;
     color: #000080;
     font-size: 2rem;
     line-height: 1.45;
-    text-shadow: 1px 1px #fff, 2px 2px #808080;
 }
 
 .article-navigation {
