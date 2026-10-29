@@ -18,7 +18,8 @@ body {
 }
 
 .site-header {
-    padding: 18px 0;
+    position: relative;
+    padding: 18px 0 48px;
     border-bottom: 3px solid #000080;
     background: #fff;
     color: #000;
@@ -34,7 +35,6 @@ body {
 .site-header h1 {
     flex: 1 1 auto;
     min-width: 0;
-    overflow: hidden;
     margin: 0;
     font-family: Arial, "MS PGothic", sans-serif;
     font-size: 2rem;
@@ -43,29 +43,39 @@ body {
 }
 
 .site-header h1 a {
+    display: inline-block;
+    margin: -2px -6px;
+    padding: 2px 6px;
     color: #000080;
     text-decoration: none;
 }
 
-.site-header h1::after {
-    display: block;
-    width: max-content;
-    margin-top: 4px;
-    padding: 1px 5px;
-    border: 1px solid #000;
+.site-header h1 a:hover {
     background: #ffff00;
-    color: #000;
+    color: #ff0000;
+}
+
+.site-header h1::after {
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    width: max-content;
+    max-width: none;
+    padding: 1px 5px;
+    border: 2px outset #fff;
+    background: #ffff00;
+    color: #ff0000;
     content: "個人ホームページ";
     font-family: Arial, "MS PGothic", sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.15em;
     white-space: nowrap;
-    animation: tagline-marquee 12s linear infinite;
+    animation: tagline-marquee 14s linear infinite;
 }
 
 @keyframes tagline-marquee {
     from {
-        transform: translateX(100%);
+        transform: translateX(100vw);
     }
 
     to {
@@ -80,7 +90,7 @@ body {
 }
 
 @media (hover: hover) {
-    .site-header h1:hover::after {
+    .site-header:hover h1::after {
         animation-play-state: paused;
     }
 }
@@ -93,17 +103,22 @@ body {
     list-style: none;
 }
 
-.site-header nav a {
+.site-header nav a,
+.more-link a,
+.latest-link {
     display: inline-block;
-    padding: 5px 12px;
-    border: 2px outset #fff;
+    padding: 6px 12px;
+    border: 4px outset #fff;
     background: #c0c0c0;
     color: #000080;
     font-size: 0.95rem;
+    font-weight: bold;
     text-decoration: none;
 }
 
-.site-header nav a:hover {
+.site-header nav a:hover,
+.more-link a:hover,
+.latest-link:hover {
     border-style: inset;
     background: #ffff00;
     color: #ff0000;
@@ -122,10 +137,12 @@ main.container {
 h2 {
     margin-top: 2em;
     margin-bottom: 20px;
-    padding-bottom: 5px;
-    border-bottom: 2px solid #000080;
+    padding: 4px 8px;
+    border: 5px ridge #fff;
+    background: #c0c0c0;
     color: #000080;
     font-size: 1.55rem;
+    text-shadow: 1px 1px #fff, 2px 2px #808080;
 }
 
 p {
@@ -228,15 +245,6 @@ th {
     text-align: right;
 }
 
-.more-link a,
-.latest-link {
-    display: inline-block;
-    padding: 4px 10px;
-    border: 2px outset #fff;
-    background: #c0c0c0;
-    font-weight: bold;
-}
-
 .site-footer {
     padding: 16px 0;
     border-top: 3px ridge #000080;
@@ -270,11 +278,12 @@ th {
 .article-title {
     margin: 0 0 0.5em;
     padding: 8px 12px;
-    border: 3px double #000080;
+    border: 6px ridge #fff;
     background: #c0c0c0;
     color: #000080;
     font-size: 2rem;
     line-height: 1.45;
+    text-shadow: 1px 1px #fff, 2px 2px #808080;
 }
 
 .article-navigation {
@@ -410,6 +419,10 @@ th {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+    }
+
+    .site-header {
+        padding-bottom: 48px;
     }
 
     .site-header h1 {
