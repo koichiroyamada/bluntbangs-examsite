@@ -247,8 +247,8 @@ th {
 .site-footer {
     padding: 16px 0;
     border-top: 3px ridge #000080;
-    background: #000080;
-    color: #fff;
+    background: #c0c0c0;
+    color: #000;
     font-size: 0.9rem;
 }
 
@@ -259,14 +259,8 @@ th {
     margin: 0;
 }
 
-.footer-content span.copyright,
-.footer-link {
-    color: #ffff00;
-}
-
-.footer-link:hover {
-    background: #ffff00;
-    color: #ff0000;
+.footer-content span.copyright {
+    color: #000;
 }
 
 .article-header {
