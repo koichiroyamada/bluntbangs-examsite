@@ -4,9 +4,9 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    color: #17243b;
-    background: #c6e1e4;
-    font-family: Georgia, "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+    color: #000;
+    background: #fff;
+    font-family: Arial, "MS PGothic", "Hiragino Kaku Gothic ProN", sans-serif;
     font-size: 16px;
     line-height: 1.75;
 }
@@ -19,9 +19,9 @@ body {
 
 .site-header {
     padding: 18px 0;
-    border-bottom: 4px ridge #8eb6ce;
-    background: #173c70;
-    color: #fff;
+    border-bottom: 3px solid #000080;
+    background: #fff;
+    color: #000;
 }
 
 .site-header .container {
@@ -32,27 +32,57 @@ body {
 }
 
 .site-header h1 {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
     margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: Arial, "MS PGothic", sans-serif;
     font-size: 2rem;
     font-weight: bold;
     letter-spacing: 0.02em;
 }
 
 .site-header h1 a {
-    color: #fff;
+    color: #000080;
     text-decoration: none;
-    text-shadow: 2px 2px #091c3a;
 }
 
 .site-header h1::after {
     display: block;
-    color: #ffe98a;
+    width: max-content;
+    margin-top: 4px;
+    padding: 1px 5px;
+    border: 1px solid #000;
+    background: #ffff00;
+    color: #000;
     content: "個人ホームページ";
-    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+    font-family: Arial, "MS PGothic", sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.15em;
-    text-shadow: none;
+    white-space: nowrap;
+    animation: tagline-marquee 12s linear infinite;
+}
+
+@keyframes tagline-marquee {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-header h1::after {
+        animation: none;
+    }
+}
+
+@media (hover: hover) {
+    .site-header h1:hover::after {
+        animation-play-state: paused;
+    }
 }
 
 .site-header nav ul {
@@ -66,17 +96,17 @@ body {
 .site-header nav a {
     display: inline-block;
     padding: 5px 12px;
-    border: 2px outset #d6e5f0;
-    background: #e7eef5;
-    color: #102f60;
+    border: 2px outset #fff;
+    background: #c0c0c0;
+    color: #000080;
     font-size: 0.95rem;
     text-decoration: none;
 }
 
 .site-header nav a:hover {
     border-style: inset;
-    background: #fff5c2;
-    color: #8a1b22;
+    background: #ffff00;
+    color: #ff0000;
 }
 
 main.container {
@@ -85,17 +115,16 @@ main.container {
     margin-top: 24px;
     margin-bottom: 24px;
     padding: 28px 34px;
-    border: 4px double #315b87;
-    background: #fffef7;
-    box-shadow: 5px 5px 0 #91b9bd;
+    border: 4px double #000080;
+    background: #fff;
 }
 
 h2 {
     margin-top: 2em;
     margin-bottom: 20px;
     padding-bottom: 5px;
-    border-bottom: 3px ridge #9eb9d1;
-    color: #183f76;
+    border-bottom: 2px solid #000080;
+    color: #000080;
     font-size: 1.55rem;
 }
 
@@ -104,17 +133,17 @@ p {
 }
 
 a {
-    color: #0000ee;
+    color: #0000cc;
     text-decoration: underline;
 }
 
 a:visited {
-    color: #551a8b;
+    color: #663399;
 }
 
 a:hover {
-    color: #c00000;
-    background: #fff2a8;
+    color: #ff0000;
+    background: #ffff00;
 }
 
 ul {
@@ -130,16 +159,16 @@ pre {
     overflow-x: auto;
     margin-bottom: 1.5em;
     padding: 14px;
-    border: 2px inset #c4cbd2;
-    background: #edf0f2;
-    color: #111;
+    border: 2px inset #808080;
+    background: #c0c0c0;
+    color: #000;
     line-height: 1.5;
 }
 
 code {
     padding: 0.08em 0.25em;
-    background: #edf0f2;
-    color: #111;
+    background: #c0c0c0;
+    color: #000;
     font-family: "Courier New", monospace;
     font-size: 0.92em;
 }
@@ -152,7 +181,7 @@ pre code {
 table {
     width: 100%;
     margin: 1.5em 0;
-    border: 2px outset #9aafc4;
+    border: 2px outset #808080;
     border-collapse: collapse;
     background: #fff;
 }
@@ -160,12 +189,12 @@ table {
 th,
 td {
     padding: 6px 9px;
-    border: 1px solid #9aafc4;
+    border: 1px solid #808080;
 }
 
 th {
-    background: #dce8f3;
-    color: #173c70;
+    background: #000080;
+    color: #fff;
 }
 
 .archive-list {
@@ -178,13 +207,13 @@ th {
     align-items: baseline;
     gap: 16px;
     padding: 8px 0;
-    border-bottom: 1px dotted #8ea6bd;
+    border-bottom: 1px dotted #808080;
 }
 
 .archive-list .archive-date {
     width: 7.5rem;
     flex-shrink: 0;
-    color: #475b70;
+    color: #000;
     font-family: "Courier New", monospace;
     font-size: 0.9rem;
 }
@@ -203,15 +232,15 @@ th {
 .latest-link {
     display: inline-block;
     padding: 4px 10px;
-    border: 2px outset #d6e5f0;
-    background: #e7eef5;
+    border: 2px outset #fff;
+    background: #c0c0c0;
     font-weight: bold;
 }
 
 .site-footer {
     padding: 16px 0;
-    border-top: 3px ridge #8eb6ce;
-    background: #173c70;
+    border-top: 3px ridge #000080;
+    background: #000080;
     color: #fff;
     font-size: 0.9rem;
 }
@@ -229,21 +258,21 @@ th {
 }
 
 .footer-link:hover {
-    color: #fff2a8;
+    color: #ffff00;
 }
 
 .article-header {
     margin: 0 0 2.5rem;
     padding-bottom: 18px;
-    border-bottom: 2px dotted #8ea6bd;
+    border-bottom: 2px dotted #808080;
 }
 
 .article-title {
     margin: 0 0 0.5em;
     padding: 8px 12px;
-    border: 3px double #315b87;
-    background: #e4edf5;
-    color: #173c70;
+    border: 3px double #000080;
+    background: #c0c0c0;
+    color: #000080;
     font-size: 2rem;
     line-height: 1.45;
 }
@@ -253,7 +282,7 @@ th {
     justify-content: space-between;
     margin: 3rem 0;
     padding-top: 1.5rem;
-    border-top: 2px dotted #8ea6bd;
+    border-top: 2px dotted #808080;
 }
 
 .nav-previous,
@@ -262,7 +291,7 @@ th {
 }
 
 .article-content {
-    color: #17243b;
+    color: #000;
     font-size: 1rem;
     line-height: 1.85;
 }
@@ -279,7 +308,7 @@ th {
 .article-content h3 {
     margin-top: 2em;
     margin-bottom: 0.7em;
-    color: #234f7c;
+    color: #000080;
     font-size: 1.25rem;
 }
 
@@ -288,7 +317,7 @@ th {
     max-width: 100%;
     height: auto;
     margin: 1.5em auto;
-    border: 4px ridge #9aafc4;
+    border: 4px ridge #808080;
     background: #fff;
 }
 
@@ -296,7 +325,7 @@ th {
     display: flex;
     flex-wrap: wrap;
     gap: 4px 18px;
-    color: #475b70;
+    color: #000;
     font-family: "Courier New", monospace;
     font-size: 0.85rem;
 }
@@ -321,20 +350,29 @@ th {
 
 .latest-article {
     padding: 18px;
-    border: 3px ridge #9aafc4;
-    background: #f0f5f8;
+    border: 3px ridge #808080;
+    background: #fff;
 }
 
 .latest-label {
     margin: 0 0 6px;
-    color: #8a1b22;
+    color: #000080;
     font-size: 0.85rem;
     font-weight: bold;
 }
 
+.latest-post-area .latest-label::after {
+    margin-left: 0.5em;
+    padding: 1px 4px;
+    border: 1px solid #ff0000;
+    background: #ffff00;
+    color: #ff0000;
+    content: "NEW!";
+}
+
 .latest-title {
     margin: 0 0 8px;
-    color: #173c70;
+    color: #000080;
     font-size: 1.45rem;
     line-height: 1.5;
 }
@@ -345,7 +383,7 @@ th {
 }
 
 .latest-date {
-    color: #475b70;
+    color: #000;
     font-family: "Courier New", monospace;
     font-size: 0.85rem;
 }
@@ -356,7 +394,7 @@ th {
 
 .archive-section {
     padding-top: 1rem;
-    border-top: 2px ridge #9eb9d1;
+    border-top: 2px ridge #000080;
 }
 
 .archive-section h2 {
@@ -372,6 +410,10 @@ th {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
+    }
+
+    .site-header h1 {
+        width: 100%;
     }
 
     main.container {
