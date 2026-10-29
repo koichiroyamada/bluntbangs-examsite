@@ -261,11 +261,12 @@ th {
 
 .footer-content span.copyright,
 .footer-link {
-    color: #fff;
+    color: #ffff00;
 }
 
 .footer-link:hover {
-    color: #ffff00;
+    background: #ffff00;
+    color: #ff0000;
 }
 
 .article-header {
